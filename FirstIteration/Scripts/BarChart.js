@@ -57,7 +57,7 @@ function drawChart(d) {
             title: 'Revenues in Dollars',
         },
         chartArea: {
-            left: 100, top: 25, right: 150, width: '80%', height: '70%'
+            left: 100, top: 25, bottom: 50, right: 150, width: '90%', height: '80%'
         },
         animation: {
             duration: 1000
