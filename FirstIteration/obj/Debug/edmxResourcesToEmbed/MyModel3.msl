@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MyDatabaseModel4StoreContainer" CdmEntityContainer="MyDatabaseEntities5">
+    <EntitySetMapping Name="Tables">
+      <EntityTypeMapping TypeName="MyDatabaseModel4.Table">
+        <MappingFragment StoreEntitySet="Table">
+          <ScalarProperty Name="SLID" ColumnName="SLID" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Medicade" ColumnName="Medicade" />
+          <ScalarProperty Name="Commercial" ColumnName="Commercial" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
