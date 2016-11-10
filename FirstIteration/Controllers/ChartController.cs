@@ -8,13 +8,12 @@ namespace FirstIteration.Controllers
 {
     public class ChartController : Controller
     {
-        // GET: Chart
-        public ActionResult Column()
+        public ActionResult Dashboard()
         {
             return View();
         }
 
-        public ActionResult Dashboard()
+        public ActionResult _BarChart()
         {
             return View();
         }

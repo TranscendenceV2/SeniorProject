@@ -1,4 +1,4 @@
-﻿    @{
+﻿@{
     Layout = null;
 }
 
@@ -10,8 +10,6 @@
 <script src="../../Scripts/bootstrap-checkbox-radio-switch.js"></script>
 <!--  Charts Plugin -->
 <script src="../../Scripts/chartist.min.js"></script>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script src="../../Scripts/BarChart.js"></script>
 <!--  Notifications Plugin    -->
 <script src="../../Scripts/bootstrap-notify.js"></script>
 <!--  Google Maps Plugin    -->
@@ -55,12 +53,11 @@
                         Data Sort Selection
                     </a>
                 </div>
-                <ul class="nav">
-                    <li class="active" style="border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 15px;">
-                        <p>Views</p>
-                        <label class="radio-inline"><input type="radio" name="optradio">Graphical</label>
-                        <label class="radio-inline"><input type="radio" name="optradio">Tabular</label>                    
-                    </li>              
+                <div class="btn-group btn-group-lg" style="background-color: yellow; border-radius: 12px; position: relative; left: 5%; top: 10px">
+                    <button type="button" class="btn btn-primary" autofocus="true">Graphical</button>
+                    <button type="button" class="btn btn-primary">Tabular</button>
+                </div>
+                <ul class="nav">   
                     <li class="active" style="padding: 10px 15px;">
                         <label for="sel1">Department:</label>
                         <select class="form-control" style="width: 80%" id="sel1">
@@ -189,8 +186,7 @@
                                     <h4 class="title">Bar Graph</h4>
                                 </div>
                                 <div class="content">
-                                    <div id="visualization" style="width:100%; height:100%">
-                                    </div>                                
+                                    @{ Html.RenderPartial("_BarChart");}                               
                                 </div>
                             </div>
                         </div>
