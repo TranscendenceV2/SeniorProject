@@ -15,11 +15,12 @@ $(document).ready(function () {
         }
 
     }).done(function () {
-        drawChart(chartData);
+        drawColumn(chartData);
+        drawLine(chartData);
     });
 });
 
-function drawChart(d) {
+function drawColumn(d) {
     var chartData = d;
     var data = null;
     data = google.visualization.arrayToDataTable(chartData);
@@ -45,7 +46,7 @@ function drawChart(d) {
 
     var chart = new google.visualization.ColumnChart(document.getElementById('visualization'));
     var options = {
-        title: 'Revenue Report',
+        title: 'Revenue Report',    
         legend: 'right', // bottom
         hAxis: {
             title: 'Year',
@@ -70,5 +71,44 @@ function drawChart(d) {
     });
 
     chart.draw(view, options);
+}
+
+function drawLine(d) {
+
+    var chartData = d;
+    var data = null;
+    data = google.visualization.arrayToDataTable(chartData);
+
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0, {
+        type: 'number',
+        label: data.getColumnLabel(0),
+        calc: function () { return 0; }
+    }, {
+        type: 'number',
+        label: data.getColumnLabel(1),
+        calc: function () { return 0; }
+    }, {
+        type: 'number',
+        label: data.getColumnLabel(2),
+        calc: function () { return 0; }
+    }, {
+        type: 'number',
+        label: data.getColumnLabel(3),
+        calc: function () { return 0; }
+    }]);
+
+    var options = {
+        title: 'Revenue Report',
+        pointSize: 5
+    };
+
+    var lineChart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    var runFirstTime = google.visualization.events.addListener(lineChart, 'ready', function () {
+        google.visualization.events.removeListener(runFirstTime);
+        lineChart.draw(data, options);
+    });
+
+    lineChart.draw(data, options);
 }
 google.load('visualization', '1', { packages: ['corechart'] });

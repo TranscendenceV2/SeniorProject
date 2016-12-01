@@ -18,6 +18,11 @@ namespace FirstIteration.Controllers
             return View();
         }
 
+        public ActionResult _LineChart()
+        {
+            return View();
+        }
+
         public JsonResult GetSalesData()
         {
             List<Table> sd = new List<Table>();
