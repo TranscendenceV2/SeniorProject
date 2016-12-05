@@ -3,18 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FirstIteration.Models;
 
 namespace FirstIteration.Controllers
 {
     public class ChartController : Controller
     {
-        // GET: Chart
-        public ActionResult Column()
+        public ActionResult Dashboard()
         {
             return View();
         }
 
-        public ActionResult Dashboard()
+        public ActionResult _BarChart()
+        {
+            return View();
+        }
+
+        public ActionResult _LineChart()
+        {
+            return View();
+        }
+
+        public ActionResult _PieChart()
+        {
+            return View();
+        }
+
+        public ActionResult _Table()
+        {
+            return View();
+        }
+
+        public ActionResult _Stats()
         {
             return View();
         }
@@ -22,7 +42,7 @@ namespace FirstIteration.Controllers
         public JsonResult GetSalesData()
         {
             List<Table> sd = new List<Table>();
-            using (MyDatabaseEntities5 dc = new MyDatabaseEntities5())
+            using (TranscendenceEntities2 dc = new TranscendenceEntities2())
             {
                 sd = dc.Tables.OrderBy(a=>a.Year).ToList();
             }
@@ -31,7 +51,7 @@ namespace FirstIteration.Controllers
             chartData[0] = new object[]{
                 "Year",
                 "State",
-                "Medicade",
+                "Medicaid",
                 "Commercial"
             };
 
@@ -39,7 +59,7 @@ namespace FirstIteration.Controllers
             foreach( var i in sd)
             {
                 j++;
-                chartData[j] = new object[] {i.Year, i.State, i.Medicade, i.Commercial };
+                chartData[j] = new object[] {i.Year, i.State, i.Medicaid, i.Commercial };
             }
 
             return new JsonResult {Data = chartData, JsonRequestBehavior = JsonRequestBehavior.AllowGet };

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="TranscendenceModelStoreContainer" CdmEntityContainer="TranscendenceEntities">
+  <EntityContainerMapping StorageEntityContainer="TranscendenceModel1StoreContainer" CdmEntityContainer="TranscendenceEntities2">
     <EntitySetMapping Name="Tables">
-      <EntityTypeMapping TypeName="TranscendenceModel.Table">
+      <EntityTypeMapping TypeName="TranscendenceModel1.Table">
         <MappingFragment StoreEntitySet="Table">
           <ScalarProperty Name="SLID" ColumnName="SLID" />
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="Medicade" ColumnName="Medicade" />
+          <ScalarProperty Name="Medicaid" ColumnName="Medicaid" />
           <ScalarProperty Name="Commercial" ColumnName="Commercial" />
         </MappingFragment>
       </EntityTypeMapping>
