@@ -60,31 +60,15 @@
                 <ul class="nav">   
                     <li class="active" style="padding: 10px 15px;">
                         <label for="sel1">Department:</label>
-                        <select class="form-control" style="width: 80%" id="sel1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
+                        @Html.DropDownList("Department", (IEnumerable<SelectListItem>)ViewBag.Department, String.Empty, new { @class = "form-control" })
                     </li>
                     <li class="active" style="padding: 10px 15px;">
                         <label for="sel1">Funding Source:</label>
-                        <select class="form-control" style="width: 80%" id="sel2">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
+                        @Html.DropDownList("FundingSource", (IEnumerable<SelectListItem>)ViewBag.FundingSource, String.Empty, new { @class = "form-control" })
                     </li>
                     <li class="active" style="padding: 10px 15px;">
                         <label for="sel1">Employee:</label>
-                        <select class="form-control" style="width: 80%" id="sel3">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
+                        @Html.DropDownList("Staff", (IEnumerable<SelectListItem>)ViewBag.Staff, String.Empty, new { @class = "form-control" })
                     </li>
                 </ul>
             </div>
@@ -144,7 +128,7 @@
                                     <h4 class="title">Data Statistics</h4>
                                 </div>
                                 <div class="content">
-                                    @{ Html.RenderPartial("_Stats");} 
+                                    <!--@{ Html.RenderPartial("_Stats");}--> 
                                 </div>
                             </div>
                         </div>
@@ -154,7 +138,7 @@
                                     <h4 class="title">Data Statistics</h4>
                                 </div>
                                 <div class="content">
-                                    @{ Html.RenderPartial("_Table");}                                    
+                                   <!-- @{ Html.RenderPartial("_Table");} -->                                    
                                 </div>
                             </div>
                         </div>

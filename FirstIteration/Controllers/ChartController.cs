@@ -9,8 +9,13 @@ namespace FirstIteration.Controllers
 {
     public class ChartController : Controller
     {
+        private transcendenceEntities db = new transcendenceEntities();
+
         public ActionResult Dashboard()
         {
+            ViewBag.Department = new SelectList(db.Departments, "DeptID", "DeptName");
+            ViewBag.FundingSource = new SelectList(db.Funding_Sources, "FundMasterID", "FundCodeName");
+            ViewBag.Staff = new SelectList(db.Staffs, "StaffID", "StaffName");
             return View();
         }
 
@@ -37,6 +42,12 @@ namespace FirstIteration.Controllers
         public ActionResult _Stats()
         {
             return View();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
