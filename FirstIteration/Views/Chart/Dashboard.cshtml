@@ -40,7 +40,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <div class="sidebar" data-color="purple" data-image="../../img/sidebar-5.jpg">
+        <div class="sidebar" data-color="blue" data-image="../../img/sidebar-6.jpg">
             <!--
 
                 Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
@@ -144,7 +144,7 @@
                                     <h4 class="title">Data Statistics</h4>
                                 </div>
                                 <div class="content">
-                                    
+                                    @{ Html.RenderPartial("_Stats");} 
                                 </div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                                     <h4 class="title">Data Statistics</h4>
                                 </div>
                                 <div class="content">
-
+                                    @{ Html.RenderPartial("_Table");}                                    
                                 </div>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                                     <h4 class="title">Budget Comparison</h4>
                                 </div>
                                 <div class="content">
-
+                                    @{ Html.RenderPartial("_PieChart");}                                   
                                 </div>
                             </div>
                         </div>

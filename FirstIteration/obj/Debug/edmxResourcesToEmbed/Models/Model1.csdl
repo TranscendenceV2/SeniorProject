@@ -10,7 +10,7 @@
     <Property Name="Medicade" Type="Int32" Nullable="false" />
     <Property Name="Commercial" Type="Int32" Nullable="false" />
   </EntityType>
-  <EntityContainer Name="TranscendenceEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="TranscendenceEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Tables" EntityType="Self.Table" />
   </EntityContainer>
 </Schema>
