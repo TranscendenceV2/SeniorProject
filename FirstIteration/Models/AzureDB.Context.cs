@@ -13,10 +13,10 @@ namespace FirstIteration.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TranscendenceEntities1 : DbContext
+    public partial class transcendenceEntities : DbContext
     {
-        public TranscendenceEntities1()
-            : base("name=TranscendenceEntities1")
+        public transcendenceEntities()
+            : base("name=transcendenceEntities")
         {
         }
     
@@ -25,6 +25,10 @@ namespace FirstIteration.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Table> Tables { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Funding_Sources> Funding_Sources { get; set; }
+        public virtual DbSet<Staff> Staffs { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
     }
 }
