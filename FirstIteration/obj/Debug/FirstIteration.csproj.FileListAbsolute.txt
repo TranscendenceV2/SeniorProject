@@ -326,6 +326,5 @@ C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\bin\Microsoft.Owin.
 C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\obj\Debug\FirstIteration.csprojResolveAssemblyReference.cache
 C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\obj\Debug\FirstIteration.dll
 C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\obj\Debug\FirstIteration.pdb
-C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\bin\DotNet.Highcharts.dll
 C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\bin\DotNet.Highcharts.pdb
 C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\bin\DotNet.Highcharts.xml

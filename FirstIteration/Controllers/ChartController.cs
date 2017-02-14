@@ -67,7 +67,7 @@ namespace FirstIteration.Controllers
             var l = (from t in db.Transactions
                      where t.DeptID == Id
                      select t).ToList();
-            var list = l.Select(m => new { date = m.TransDate, value = m.TransAmount, text = m.Funding_Sources.FundCodeName });
+            var list = l.Select(m => new { name = m.Funding_Sources.FundCodeName, value = m.TransAmount  });
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 

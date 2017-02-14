@@ -1,23 +1,18 @@
 $(function () {
     $('#generate').click(function () {
-        var sub = $('#ddldepartment').val();
-        if (sub != null && sub != "") {
+        var dept = $('#ddldepartment').val();
+        if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/LineData',
-                data: { id: sub },
+                data: { id: dept },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        $.each(data, function (i, item) {
-
-                            $("#ddlstaff").append($("<option></option>").val(item.value).html(item.text));
-                        });
-                        
+                        alert(JSON.stringify(data));
                     }
                     else {
-                        alert('Error Drawing Graph!');
+                        alert('data is null');
                     }
-                    drawLine(data);
                 }
             });
                     
@@ -58,9 +53,7 @@ function drawLine(d) {
                 pointStart: 2010
             }
         },
-
         series: d,
-
     });
 }
 
