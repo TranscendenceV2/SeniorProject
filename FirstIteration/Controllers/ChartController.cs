@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FirstIteration.Models;
+using DotNet.Highcharts.Options;
+using DotNet.Highcharts.Helpers;
 
 namespace FirstIteration.Controllers
 {
@@ -57,6 +59,15 @@ namespace FirstIteration.Controllers
                                 where t.DeptID == Id
                                 select t).ToList();
             var list = transactions.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult LineData(int Id)
+        {
+            var l = (from t in db.Transactions
+                     where t.DeptID == Id
+                     select t).ToList();
+            var list = l.Select(m => new { date = m.TransDate, value = m.TransAmount, text = m.Funding_Sources.FundCodeName });
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
