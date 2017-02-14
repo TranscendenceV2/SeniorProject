@@ -1,24 +1,9 @@
 $(document).ready(function () {
-    //Load Data Here
-    var chartData = null;
-    $.ajax({
-        url: '/Chart/GetSalesData',
-        type: 'GET',
-        dataType: 'json',
-        data: '',
-        success: function (d) {
-            chartData = d;
-        },
-        error: function () {
-            alert('Error!');
-        }
-
-    }).done(function () {
-        drawColumn();
-        drawLine();
-        drawPie();
-    });
+    drawLine();
+    drawColumn();
+    drawPie();
 });
+
 function drawLine() {
     Highcharts.chart('chart_div', {
 

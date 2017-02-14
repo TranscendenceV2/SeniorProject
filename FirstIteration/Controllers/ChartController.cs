@@ -9,13 +9,11 @@ namespace FirstIteration.Controllers
 {
     public class ChartController : Controller
     {
-        private transcendenceEntities db = new transcendenceEntities();
+        public transcendenceEntities db = new transcendenceEntities();
 
         public ActionResult Dashboard()
         {
             ViewBag.Department = new SelectList(db.Departments, "DeptID", "DeptName");
-            ViewBag.FundingSource = new SelectList(db.Funding_Sources, "FundMasterID", "FundCodeName");
-            ViewBag.Staff = new SelectList(db.Staffs, "StaffID", "StaffName");
             return View();
         }
 
@@ -44,10 +42,23 @@ namespace FirstIteration.Controllers
             return View();
         }
 
-        protected override void Dispose(bool disposing)
+        public JsonResult StaffList(int Id)
         {
-            db.Dispose();
-            base.Dispose(disposing);
+            var staff = (from s in db.Staffs
+                         where s.DeptID == Id
+                         select s).ToList();
+            var list = staff.Select(m => new { value = m.StaffID, text = m.StaffName });
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult FundingSourceList(int Id)
+        {
+            var transactions = (from t in db.Transactions
+                                where t.DeptID == Id
+                                select t).ToList();
+            var list = transactions.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

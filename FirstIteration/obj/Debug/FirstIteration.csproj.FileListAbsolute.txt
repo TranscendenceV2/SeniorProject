@@ -241,6 +241,6 @@ C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\bin\Microsoft.Owi
 C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\obj\Debug\FirstIteration.csprojResolveAssemblyReference.cache
 C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\obj\Debug\FirstIteration.dll
 C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\obj\Debug\FirstIteration.pdb
+C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\obj\Debug\FirstIteration.csprojResolveAssemblyReference.cache
