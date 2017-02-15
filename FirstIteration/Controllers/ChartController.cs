@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using FirstIteration.Models;
 using DotNet.Highcharts.Options;
 using DotNet.Highcharts.Helpers;
+using System.Collections;
+using System.Data;
 
 namespace FirstIteration.Controllers
 {
@@ -64,12 +66,21 @@ namespace FirstIteration.Controllers
 
         public JsonResult LineData(int Id)
         {
+
             var l = (from t in db.Transactions
                      where t.DeptID == Id
-                     select t).ToList();
+                     select t).OrderBy(x => x.Funding_Sources.FundCodeName).ToList();
+  
             var list = l.Select(m => new { name = m.Funding_Sources.FundCodeName, value = m.TransAmount  });
             return Json(list, JsonRequestBehavior.AllowGet);
         }
+
+        public class RootObject
+        {
+            public string name { get; set; }
+            public List<double> data { get; set; }
+        }
+
 
     }
 }

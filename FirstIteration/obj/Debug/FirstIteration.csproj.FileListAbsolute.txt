@@ -328,3 +328,5 @@ C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\obj\Debug\FirstIter
 C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\obj\Debug\FirstIteration.pdb
 C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\bin\DotNet.Highcharts.pdb
 C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\bin\DotNet.Highcharts.xml
+C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\bin\DotNet.Highcharts.pdb
+C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\bin\DotNet.Highcharts.xml
