@@ -12,12 +12,12 @@ namespace FirstIteration.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Table
+    public partial class Staff
     {
-        public int SLID { get; set; }
-        public int Year { get; set; }
-        public int State { get; set; }
-        public int Medicaid { get; set; }
-        public int Commercial { get; set; }
+        public int StaffID { get; set; }
+        public int DeptID { get; set; }
+        public string StaffName { get; set; }
+    
+        public virtual Department Department { get; set; }
     }
 }

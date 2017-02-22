@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="transcendenceModelStoreContainer" CdmEntityContainer="transcendenceEntities">
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="transcendenceModel.Department">
+        <MappingFragment StoreEntitySet="Departments">
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Funding_Sources">
+      <EntityTypeMapping TypeName="transcendenceModel.Funding_Sources">
+        <MappingFragment StoreEntitySet="Funding_Sources">
+          <ScalarProperty Name="FundMasterID" ColumnName="FundMasterID" />
+          <ScalarProperty Name="FundCategory" ColumnName="FundCategory" />
+          <ScalarProperty Name="FundCodeName" ColumnName="FundCodeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Staffs">
+      <EntityTypeMapping TypeName="transcendenceModel.Staff">
+        <MappingFragment StoreEntitySet="Staff">
+          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transactions">
+      <EntityTypeMapping TypeName="transcendenceModel.Transaction">
+        <MappingFragment StoreEntitySet="Transactions">
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="FundMasterID" ColumnName="FundMasterID" />
+          <ScalarProperty Name="TransType" ColumnName="TransType" />
+          <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+          <ScalarProperty Name="TransTransfer" ColumnName="TransTransfer" />
+          <ScalarProperty Name="TransAdjustment" ColumnName="TransAdjustment" />
+          <ScalarProperty Name="TransCredit" ColumnName="TransCredit" />
+          <ScalarProperty Name="TransCharge" ColumnName="TransCharge" />
+          <ScalarProperty Name="TransAmount" ColumnName="TransAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="database_firewall_rules">
+      <EntityTypeMapping TypeName="transcendenceModel.database_firewall_rules">
+        <MappingFragment StoreEntitySet="database_firewall_rules">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+          <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+          <ScalarProperty Name="create_date" ColumnName="create_date" />
+          <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
