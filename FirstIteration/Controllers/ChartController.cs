@@ -9,6 +9,7 @@ using DotNet.Highcharts.Helpers;
 using System.Collections;
 using System.Data;
 
+
 namespace FirstIteration.Controllers
 {
     public class ChartController : Controller
@@ -70,37 +71,38 @@ namespace FirstIteration.Controllers
             var l = (from t in db.Transactions
                      where t.DeptID == Id
                      select t).OrderBy(x => x.Funding_Sources.FundCodeName).ToList();
-
+            Console.Write(l);
             String temp = null;
-            List<RootObject> data  = new List<RootObject>();
+            List<RootObject> dataSet  = new List<RootObject>();
             foreach(var i in l)
             {
                 if (i.Funding_Sources.FundCodeName != temp)
                 {
                     temp = i.Funding_Sources.FundCodeName;
-                    data.Add(new RootObject
+                    dataSet.Add(new RootObject
                     {
-                        name = i.Funding_Sources.FundCodeName
+                        name = i.Funding_Sources.FundCodeName.Replace("\r\n", string.Empty),
+                        data = new List<decimal>()
                     });
                     decimal v = i.TransAmount.GetValueOrDefault();
-                    data.Last<RootObject>().values.Add(v);                        
+                    dataSet.Last<RootObject>().data.Add(v);                        
                 }
                 else
                 {
                     decimal d = i.TransAmount.GetValueOrDefault();
-                    data.Last<RootObject>().values.Add(d);
-
+                    dataSet.Last<RootObject>().data.Add(d);           
                 }
+               // Console.WriteLine("Name: {0} Value: {1}", i.Funding_Sources.FundCodeName, i.TransAmount);
             }
-  
             //var list = l.Select(m => new { name = m.Funding_Sources.FundCodeName, value = m.TransAmount  });
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(dataSet, JsonRequestBehavior.AllowGet);
         }
+
 
         public class RootObject
         {
             public string name { get; set; }
-            public List<decimal> values { get; set; }
+            public List<decimal> data { get; set; }
         }
 
 
