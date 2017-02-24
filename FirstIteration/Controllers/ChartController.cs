@@ -9,6 +9,7 @@ using DotNet.Highcharts.Helpers;
 using System.Collections;
 using System.Data;
 
+
 namespace FirstIteration.Controllers
 {
     public class ChartController : Controller
@@ -70,15 +71,38 @@ namespace FirstIteration.Controllers
             var l = (from t in db.Transactions
                      where t.DeptID == Id
                      select t).OrderBy(x => x.Funding_Sources.FundCodeName).ToList();
-  
-            var list = l.Select(m => new { name = m.Funding_Sources.FundCodeName, value = m.TransAmount  });
-            return Json(list, JsonRequestBehavior.AllowGet);
+            Console.Write(l);
+            String temp = null;
+            List<RootObject> dataSet  = new List<RootObject>();
+            foreach(var i in l)
+            {
+                if (i.Funding_Sources.FundCodeName != temp)
+                {
+                    temp = i.Funding_Sources.FundCodeName;
+                    dataSet.Add(new RootObject
+                    {
+                        name = i.Funding_Sources.FundCodeName.Replace("\r\n", string.Empty),
+                        data = new List<decimal>()
+                    });
+                    decimal v = i.TransAmount.GetValueOrDefault();
+                    dataSet.Last<RootObject>().data.Add(v);                        
+                }
+                else
+                {
+                    decimal d = i.TransAmount.GetValueOrDefault();
+                    dataSet.Last<RootObject>().data.Add(d);           
+                }
+               // Console.WriteLine("Name: {0} Value: {1}", i.Funding_Sources.FundCodeName, i.TransAmount);
+            }
+            //var list = l.Select(m => new { name = m.Funding_Sources.FundCodeName, value = m.TransAmount  });
+            return Json(dataSet, JsonRequestBehavior.AllowGet);
         }
+
 
         public class RootObject
         {
             public string name { get; set; }
-            public List<double> data { get; set; }
+            public List<decimal> data { get; set; }
         }
 
 
