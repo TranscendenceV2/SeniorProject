@@ -8,17 +8,23 @@ using DotNet.Highcharts.Options;
 using DotNet.Highcharts.Helpers;
 using System.Collections;
 using System.Data;
+using FirstIteration.Services;
 
 
 namespace FirstIteration.Controllers
 {
     public class ChartController : Controller
     {
-        public transcendenceEntities db = new transcendenceEntities();
+        private static LineChartServices LineService = new LineChartServices();
+        private static StaffListServices StaffService = new StaffListServices();
+        private static FundingSourceServices FundService = new FundingSourceServices();
 
         public ActionResult Dashboard()
         {
-            ViewBag.Department = new SelectList(db.Departments, "DeptID", "DeptName");
+            using(var context = new transcendenceEntities())
+            {
+                ViewBag.Department = new SelectList(context.Departments, "DeptID", "DeptName");
+            }
             return View();
         }
 
@@ -49,32 +55,33 @@ namespace FirstIteration.Controllers
 
         public JsonResult StaffList(int Id)
         {
-            var staff = (from s in db.Staffs
+            /*var staff = (from s in db.Staffs
                          where s.DeptID == Id
                          select s).ToList();
-            var list = staff.Select(m => new { value = m.StaffID, text = m.StaffName });
-            return Json(list, JsonRequestBehavior.AllowGet);
+            var list = staff.Select(m => new { value = m.StaffID, text = m.StaffName });*/
+            
+            return Json(StaffService.GetStaffList(Id), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult FundingSourceList(int Id)
         {
-            var transactions = (from t in db.Transactions
+            /*var transactions = (from t in db.Transactions
                                 where t.DeptID == Id
                                 select t).ToList();
-            var list = transactions.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });
-            return Json(list, JsonRequestBehavior.AllowGet);
+            var list = transactions.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });*/
+            
+            return Json(FundService.GetFundingSourceList(Id), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult LineData(int Id)
         {
 
-            var l = (from t in db.Transactions
+            /*var lineData = (from t in db.Transactions
                      where t.DeptID == Id
-                     select t).OrderBy(x => x.Funding_Sources.FundCodeName).ToList();
-            Console.Write(l);
-            String temp = null;
+                     select t).OrderBy(x => x.Funding_Sources.FundCodeName).ToList();*/
+            /*String temp = null;
             List<RootObject> dataSet  = new List<RootObject>();
-            foreach(var i in l)
+            foreach(var i in lineData)
             {
                 if (i.Funding_Sources.FundCodeName != temp)
                 {
@@ -94,16 +101,18 @@ namespace FirstIteration.Controllers
                 }
                // Console.WriteLine("Name: {0} Value: {1}", i.Funding_Sources.FundCodeName, i.TransAmount);
             }
-            //var list = l.Select(m => new { name = m.Funding_Sources.FundCodeName, value = m.TransAmount  });
-            return Json(dataSet, JsonRequestBehavior.AllowGet);
+            var list = l.Select(m => new { name = m.Funding_Sources.FundCodeName, value = m.TransAmount  });*/
+            
+            
+                return Json(LineService.GetTransactionsByDeptID(Id), JsonRequestBehavior.AllowGet);
         }
 
 
-        public class RootObject
+        /*public class RootObject
         {
             public string name { get; set; }
             public List<decimal> data { get; set; }
-        }
+        }*/
 
 
     }
