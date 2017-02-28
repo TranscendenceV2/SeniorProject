@@ -8,9 +8,10 @@ $(function () {
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        alert(JSON.stringify(data));
+                        //alert(JSON.stringify(data));
                         //console.log(JSON.stringify(data));
-                        //drawLine(data);
+                        drawLine(data);
+                        drawColumn(data);
                     }
                     else {
                         alert('data is null');
@@ -52,14 +53,14 @@ function drawLine(d) {
 
         plotOptions: {
             series: {
-                pointStart: 2010
+                pointStart: '2010'
             }
         },
         series: d,
     });
 }
 
-function drawColumn() {
+function drawColumn(d) {
     Highcharts.chart('visualization', {
         chart: {
             type: 'column'
@@ -107,14 +108,7 @@ function drawColumn() {
                 borderWidth: 0
             }
         },
-        series: [{
-            name: 'text',
-            lineWidth: 4
-
-        }, {
-            name: 'value',
-            lineWidth: 4
-        }]
+        series: d,
 
     });
 }

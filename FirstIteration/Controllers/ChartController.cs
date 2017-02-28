@@ -73,9 +73,9 @@ namespace FirstIteration.Controllers
 
         public JsonResult LineData(int Id)
         {
-            var list = LineService.GetTransactionsByDeptID(Id);
-            var data = list.Select(m => new { name = m.Key, value = m.Value });
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var list = LineService.GetTransactionsByDeptID(Id).Select(m => new { name = m.Key, data = m.Value });
+            //var data = list.Select(m => new { name = m.Key, value = m.Value });
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
     }
 }
