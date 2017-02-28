@@ -8,15 +8,19 @@ namespace FirstIteration.Services
 {
     public class FundingSourceServices
     {
-        public IEnumerable<Transaction> GetFundingSourceList(int id)
+        public IEnumerable<Object> GetFundingSourceList(int id)
         {
-            IEnumerable<Transaction> transactionsList;
+            
             using (var context = new transcendenceEntities())
             {
-                transactionsList = context.Transactions.Where(t => t.DeptID == id).ToList();
+                var fundSource = (from s in context.Transactions
+                         where s.DeptID == id
+                         select s).ToList();
+                var fundList = fundSource.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });
+                return fundList;
             }
-            transactionsList.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });
-            return transactionsList;
+            
+
         }
     }
 }

@@ -8,9 +8,9 @@ $(function () {
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
+                        alert(JSON.stringify(data));
                         //console.log(JSON.stringify(data));
-                        drawLine(data);
+                        //drawLine(data);
                     }
                     else {
                         alert('data is null');

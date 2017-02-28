@@ -65,14 +65,14 @@
                 <ul class="nav">   
                     <li class="active" style="padding: 10px 15px;">
                         <label for="sel1">Department:</label>
-                        @Html.DropDownListFor(m => m.Departments , (SelectList)ViewBag.Department, "--Select Department--", new { @class = "form-control", id = "ddldepartment" })
+                        @Html.DropDownListFor(m => m.Departments , (IEnumerable<SelectListItem>)ViewBag.Department, "--Select Department--", new { @class = "form-control", id = "ddldepartment" })
                     </li>
-                    <li class="active" style="padding: 10px 15px;">
+                    <!--<li class="active" style="padding: 10px 15px;">
                         <label for="sel1">Funding Source:</label>
                         <select id="ddlfunding" name="funding_source" class="form-control">
                             <option value="">--Select Funding Source--</option>
                         </select>
-                    </li>
+                    </li>-->
                     <li class="active" style="padding: 10px 15px;">
                         <label for="sel1">Employee:</label>                        
                         <select id="ddlstaff" name="staff_id" class="form-control">

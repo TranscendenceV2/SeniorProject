@@ -18,14 +18,14 @@ namespace FirstIteration.Controllers
         private static LineChartServices LineService = new LineChartServices();
         private static StaffListServices StaffService = new StaffListServices();
         private static FundingSourceServices FundService = new FundingSourceServices();
+        private static DepartmentServices DeptService = new DepartmentServices();
 
         public ActionResult Dashboard()
         {
-            using(var context = new transcendenceEntities())
-            {
-                ViewBag.Department = new SelectList(context.Departments, "DeptID", "DeptName");
-            }
+            ViewBag.Department = DeptService.GetAllDepartments();
             return View();
+            
+            
         }
 
         public ActionResult _BarChart()
@@ -55,65 +55,27 @@ namespace FirstIteration.Controllers
 
         public JsonResult StaffList(int Id)
         {
-            /*var staff = (from s in db.Staffs
-                         where s.DeptID == Id
-                         select s).ToList();
-            var list = staff.Select(m => new { value = m.StaffID, text = m.StaffName });*/
-            
-            return Json(StaffService.GetStaffList(Id), JsonRequestBehavior.AllowGet);
+            var staffList = StaffService.GetStaffList(Id);
+            var list = staffList.Select(m => new { value = m.StaffID, text = m.StaffName });
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult FundingSourceList(int Id)
+        /*public JsonResult FundingSourceList(int Id)
         {
-            /*var transactions = (from t in db.Transactions
+            var transactions = (from t in db.Transactions
                                 where t.DeptID == Id
                                 select t).ToList();
-            var list = transactions.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });*/
-            
-            return Json(FundService.GetFundingSourceList(Id), JsonRequestBehavior.AllowGet);
-        }
+            var list = transactions.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });
+
+            var fundList = FundService.GetFundingSourceList(Id);
+            return Json(fundList, JsonRequestBehavior.AllowGet);
+        }*/
 
         public JsonResult LineData(int Id)
         {
-
-            /*var lineData = (from t in db.Transactions
-                     where t.DeptID == Id
-                     select t).OrderBy(x => x.Funding_Sources.FundCodeName).ToList();*/
-            /*String temp = null;
-            List<RootObject> dataSet  = new List<RootObject>();
-            foreach(var i in lineData)
-            {
-                if (i.Funding_Sources.FundCodeName != temp)
-                {
-                    temp = i.Funding_Sources.FundCodeName;
-                    dataSet.Add(new RootObject
-                    {
-                        name = i.Funding_Sources.FundCodeName.Replace("\r\n", string.Empty),
-                        data = new List<decimal>()
-                    });
-                    decimal v = i.TransAmount.GetValueOrDefault();
-                    dataSet.Last<RootObject>().data.Add(v);                        
-                }
-                else
-                {
-                    decimal d = i.TransAmount.GetValueOrDefault();
-                    dataSet.Last<RootObject>().data.Add(d);           
-                }
-               // Console.WriteLine("Name: {0} Value: {1}", i.Funding_Sources.FundCodeName, i.TransAmount);
-            }
-            var list = l.Select(m => new { name = m.Funding_Sources.FundCodeName, value = m.TransAmount  });*/
-            
-            
-                return Json(LineService.GetTransactionsByDeptID(Id), JsonRequestBehavior.AllowGet);
+            var list = LineService.GetTransactionsByDeptID(Id);
+            var data = list.Select(m => new { name = m.Key, value = m.Value });
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
-
-
-        /*public class RootObject
-        {
-            public string name { get; set; }
-            public List<decimal> data { get; set; }
-        }*/
-
-
     }
 }

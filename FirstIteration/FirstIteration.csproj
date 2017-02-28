@@ -241,6 +241,7 @@
       <DependentUpon>AzureDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DepartmentServices.cs" />
     <Compile Include="Services\FundingSourceServices.cs" />
     <Compile Include="Services\LineChartServices.cs" />
     <Compile Include="Services\StaffListServices.cs" />

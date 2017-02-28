@@ -9,8 +9,8 @@
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        $.each(data, function (i, item) {
-                            $("#ddlstaff").append($("<option></option>").val(item.value).html(item.text));
+                        $.each(data, function (i, item) {                            
+                            $("#ddlstaff").append($("<option></option>").val(item.Value).html(item.text));
                         });
                     }
                     else {
@@ -25,7 +25,7 @@
     });
 });
 
-$(function () {
+/*$(function () {
     $('#ddldepartment').change(function () {
         var sub = $('#ddldepartment').val();
         if (sub != null && sub != "") {
@@ -37,7 +37,7 @@ $(function () {
                 success: function (data) {
                     if (data != null && data != "") {
                         $.each(data, function (i, item) {
-                            $("#ddlfunding").append($("<option></option>").val(item.value).html(item.text));
+                            $("#ddlfunding").append($("<option></option>").val(item.text).html(item.Value));
                         });
                     }
                     else {
@@ -50,4 +50,4 @@ $(function () {
             $('#ddlstaff').html(' <option value="">--Select State--</option>');
         }
     });
-});
+});*/
