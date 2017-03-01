@@ -23,6 +23,7 @@ namespace FirstIteration.Models
         public decimal TransCredit { get; set; }
         public decimal TransCharge { get; set; }
         public Nullable<decimal> TransAmount { get; set; }
+        public Nullable<int> UniqueID { get; set; }
     
         public virtual Department Department { get; set; }
         public virtual Funding_Sources Funding_Sources { get; set; }

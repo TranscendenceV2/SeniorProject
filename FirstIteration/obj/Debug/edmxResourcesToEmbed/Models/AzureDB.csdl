@@ -15,7 +15,7 @@
     </Key>
     <Property Name="FundMasterID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="FundCategory" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="FundCodeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FundCodeName" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Transactions" Relationship="Self.FK_FundMasterID" FromRole="Funding_Sources" ToRole="Transactions" />
   </EntityType>
   <EntityType Name="Staff">
@@ -43,6 +43,7 @@
     <Property Name="TransAmount" Type="Decimal" Precision="9" Scale="2" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="Department" Relationship="Self.FK_Dept" FromRole="Transactions" ToRole="Departments" />
     <NavigationProperty Name="Funding_Sources" Relationship="Self.FK_FundMasterID" FromRole="Transactions" ToRole="Funding_Sources" />
+    <Property Name="UniqueID" Type="Int32" />
   </EntityType>
   <EntityType Name="database_firewall_rules">
     <Key>

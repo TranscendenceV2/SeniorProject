@@ -13,7 +13,7 @@
     </Key>
     <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
     <Property Name="FundCategory" Type="char" MaxLength="10" Nullable="false" />
-    <Property Name="FundCodeName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="FundCodeName" Type="char" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Staff">
     <Key>
@@ -23,11 +23,14 @@
     <Property Name="DeptID" Type="int" Nullable="false" />
     <Property Name="StaffName" Type="char" MaxLength="35" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'transcendence.dbo.Transactions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Transactions">
     <Key>
       <PropertyRef Name="DeptID" />
       <PropertyRef Name="FundMasterID" />
     </Key>
+    <Property Name="UniqueID" Type="int" />
     <Property Name="DeptID" Type="int" Nullable="false" />
     <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
     <Property Name="TransType" Type="char" MaxLength="10" Nullable="false" />
@@ -102,7 +105,20 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
     <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Funding_Sources" EntityType="Self.Funding_Sources" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transactions" EntityType="Self.Transactions" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Transactions].[UniqueID] AS [UniqueID], 
+    [Transactions].[DeptID] AS [DeptID], 
+    [Transactions].[FundMasterID] AS [FundMasterID], 
+    [Transactions].[TransType] AS [TransType], 
+    [Transactions].[TransDate] AS [TransDate], 
+    [Transactions].[TransTransfer] AS [TransTransfer], 
+    [Transactions].[TransAdjustment] AS [TransAdjustment], 
+    [Transactions].[TransCredit] AS [TransCredit], 
+    [Transactions].[TransCharge] AS [TransCharge], 
+    [Transactions].[TransAmount] AS [TransAmount]
+    FROM [dbo].[Transactions] AS [Transactions]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
       <DefiningQuery>SELECT 
     [database_firewall_rules].[id] AS [id], 
