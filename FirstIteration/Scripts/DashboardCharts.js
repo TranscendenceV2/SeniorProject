@@ -12,6 +12,7 @@ $(function () {
                         //console.log(JSON.stringify(data));
                         drawLine(data);
                         drawColumn(data);
+                        //drawPie(data);
                     }
                     else {
                         alert('data is null');
@@ -26,23 +27,33 @@ $(function () {
     });
 });
 
-function drawLine(d) {
+function drawLine(jsonData) {
     Highcharts.chart('chart_div', {
 
         data: {
-            d: d
+            d: jsonData
         },
         title: {
-            text: 'Solar Employment Growth by Sector, 2010-2016'
+            text: 'Monthly Income by Funding Source'
         },
 
         subtitle: {
-            text: 'Source: thesolarfoundation.com'
+            text: 'Clay Behavioral Health'
         },
-
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
         yAxis: {
             title: {
-                text: 'Number of Employees'
+                text: 'Revenue ($)'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
             }
         },
         legend: {
@@ -50,26 +61,20 @@ function drawLine(d) {
             align: 'right',
             verticalAlign: 'middle'
         },
-
-        plotOptions: {
-            series: {
-                pointStart: '2010'
-            }
-        },
-        series: d,
+        series: jsonData,
     });
 }
 
-function drawColumn(d) {
+function drawColumn(jsonData) {
     Highcharts.chart('visualization', {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Monthly Average Rainfall'
+            text: 'Monthly Revenue by Funding Source'
         },
         subtitle: {
-            text: 'Source: WorldClimate.com'
+            text: 'Clay Behavioral Health'
         },
         xAxis: {
             categories: [
@@ -91,13 +96,13 @@ function drawColumn(d) {
         yAxis: {
             min: 0,
             title: {
-                text: 'Rainfall (mm)'
+                text: 'Revenue ($)'
             }
         },
         tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} $</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true
@@ -108,12 +113,12 @@ function drawColumn(d) {
                 borderWidth: 0
             }
         },
-        series: d,
+        series: jsonData,
 
     });
 }
 
-function drawPie() {
+function drawPie(jsonData) {
     Highcharts.chart('pie_div', {
         chart: {
             plotBackgroundColor: null,
@@ -140,7 +145,7 @@ function drawPie() {
                 }
             }
         },
-        series: [{
+        series: jsonData, /*[{
             name: 'Brands',
             colorByPoint: true,
             data: [{
@@ -164,6 +169,6 @@ function drawPie() {
                 name: 'Proprietary or Undetectable',
                 y: 0.2
             }]
-        }]
+        }]*/
     });
 }

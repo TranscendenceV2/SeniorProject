@@ -9,14 +9,15 @@ namespace FirstIteration.Services
 {
     public class DepartmentServices
     {
+        /* returns list of all departments by DeptID, and DeptName*/
         public SelectList GetAllDepartments()
         {
-            var departments = new List<Department>();
+            var allDepartments = new List<Department>();
             using (var db = new transcendenceEntities())
             {
-                departments = db.Departments.ToList();
+                allDepartments = db.Departments.ToList();
             }
-            return new SelectList(departments, "DeptID", "DeptName");
+            return new SelectList(allDepartments, "DeptID", "DeptName");
         }
     }
 }

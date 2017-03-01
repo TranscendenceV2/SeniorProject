@@ -8,16 +8,17 @@ namespace FirstIteration.Services
 {
     public class FundingSourceServices
     {
+        /* returns all funding sources that match dept ID */
         public IEnumerable<Object> GetFundingSourceList(int id)
         {
             
             using (var context = new transcendenceEntities())
             {
-                var fundSource = (from s in context.Transactions
+                var allFundSources = (from s in context.Transactions
                          where s.DeptID == id
                          select s).ToList();
-                var fundList = fundSource.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });
-                return fundList;
+                var formattedFundList = allFundSources.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });
+                return formattedFundList;
             }
             
 

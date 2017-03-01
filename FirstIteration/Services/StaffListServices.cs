@@ -9,13 +9,14 @@ namespace FirstIteration.Services
 {
     public class StaffListServices
     {
+        /* returns all staff that match deptID */
         public List<Staff> GetStaffList(int id)
         {
 
-            var staff = new List<Staff>();
+            var allStaff = new List<Staff>();
             using (var context = new transcendenceEntities())
             {
-                staff = (from s in context.Staffs
+                allStaff = (from s in context.Staffs
                              where s.DeptID == id
                              select s).ToList();
                 
@@ -23,7 +24,7 @@ namespace FirstIteration.Services
             }
             //staffList.Select(m => new { value = m.StaffID, text = m.StaffName });
             // return new SelectList(staffList, "DeptID", "DeptName");
-            return staff;
+            return allStaff;
         }
     }
 }

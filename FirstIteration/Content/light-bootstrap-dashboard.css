@@ -385,6 +385,11 @@ body > .navbar-collapse[data-image]:after,
 body > .navbar-collapse.has-image:after {
   opacity: .77;
 }
+.sidebar[data-color="clay"]:after,
+body > .navbar-collapse[data-color="clay"]:after {
+  background: #68b5c1;
+  background-size: 150% 150%;
+}
 .sidebar[data-color="blue"]:after,
 body > .navbar-collapse[data-color="blue"]:after {
   background: #1F77D0;
