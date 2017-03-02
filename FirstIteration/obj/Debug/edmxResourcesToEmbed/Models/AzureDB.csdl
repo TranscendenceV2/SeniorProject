@@ -29,8 +29,7 @@
   </EntityType>
   <EntityType Name="Transaction">
     <Key>
-      <PropertyRef Name="DeptID" />
-      <PropertyRef Name="FundMasterID" />
+      <PropertyRef Name="UniqueID" />
     </Key>
     <Property Name="DeptID" Type="Int32" Nullable="false" />
     <Property Name="FundMasterID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
@@ -43,7 +42,7 @@
     <Property Name="TransAmount" Type="Decimal" Precision="9" Scale="2" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="Department" Relationship="Self.FK_Dept" FromRole="Transactions" ToRole="Departments" />
     <NavigationProperty Name="Funding_Sources" Relationship="Self.FK_FundMasterID" FromRole="Transactions" ToRole="Funding_Sources" />
-    <Property Name="UniqueID" Type="Int32" />
+    <Property Name="UniqueID" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="database_firewall_rules">
     <Key>

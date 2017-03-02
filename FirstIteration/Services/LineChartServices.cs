@@ -17,8 +17,8 @@ namespace FirstIteration.Services
             Dictionary<string, List<decimal?>> test;
             using (var context = new transcendenceEntities())
             {
-                var allTransactions = context.Transactions.Where(t => t.DeptID == id).ToList();
-                var byFundSource = allTransactions.GroupBy(m => new { m.Funding_Sources.FundCodeName, m.TransDate.Month, m.TransAmount}).Select(m => new DateObject() { fundName = m.Key.FundCodeName, transAmount = m.Sum(k => k.TransAmount) });//.ToDictionary(t => t.fundName, t => t.Select(g => g.TransAmount).ToList());                
+                var allTransactions = context.Transactions.Where(t => t.DeptID == id).OrderBy(m => m.TransDate).ToList();
+                var byFundSource = allTransactions.GroupBy(m => new { m.Funding_Sources.FundCodeName, m.TransDate.Month }).Select(m => new DateObject() { fundName = m.Key.FundCodeName, transAmount = m.Sum(k => k.TransAmount) });//.ToDictionary(t => t.fundName, t => t.Select(g => g.TransAmount).ToList());                
                 test = byFundSource.GroupBy(m => m.fundName).ToDictionary(t => t.Key, t => t.Select(g => g.transAmount).ToList());
             }
             //var t = transactions.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName }).GroupBy(m => m.text);
