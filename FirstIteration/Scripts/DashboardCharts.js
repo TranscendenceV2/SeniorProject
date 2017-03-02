@@ -12,7 +12,7 @@ $(function () {
                         //console.log(JSON.stringify(data));
                         drawLine(data);
                         drawColumn(data);
-                        //drawPie(data);
+                        drawPie();
                     }
                     else {
                         alert('data is null');
@@ -118,7 +118,7 @@ function drawColumn(jsonData) {
     });
 }
 
-function drawPie(jsonData) {
+function drawPie() {
     Highcharts.chart('pie_div', {
         chart: {
             plotBackgroundColor: null,
@@ -145,7 +145,7 @@ function drawPie(jsonData) {
                 }
             }
         },
-        series: jsonData, /*[{
+        series: [{
             name: 'Brands',
             colorByPoint: true,
             data: [{
@@ -169,6 +169,6 @@ function drawPie(jsonData) {
                 name: 'Proprietary or Undetectable',
                 y: 0.2
             }]
-        }]*/
+        }]
     });
 }
