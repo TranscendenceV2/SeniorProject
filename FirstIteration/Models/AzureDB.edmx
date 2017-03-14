@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="transcendenceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="transcendenceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Departments">
           <Key>
             <PropertyRef Name="DeptID" />
@@ -18,7 +18,7 @@
           </Key>
           <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="FundCategory" Type="char" MaxLength="10" Nullable="false" />
-          <Property Name="FundCodeName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FundCodeName" Type="char" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Staff">
           <Key>
@@ -30,9 +30,9 @@
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
-            <PropertyRef Name="DeptID" />
-            <PropertyRef Name="FundMasterID" />
+            <PropertyRef Name="UniqueID" />
           </Key>
+          <Property Name="UniqueID" Type="int" Nullable="false" />
           <Property Name="DeptID" Type="int" Nullable="false" />
           <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="TransType" Type="char" MaxLength="10" Nullable="false" />
@@ -131,8 +131,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="transcendenceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -151,7 +150,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           </Key>
           <Property Name="FundMasterID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="FundCategory" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="FundCodeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FundCodeName" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_FundMasterID" FromRole="Funding_Sources" ToRole="Transactions" />
         </EntityType>
         <EntityType Name="Staff">
@@ -165,8 +164,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
-            <PropertyRef Name="DeptID" />
-            <PropertyRef Name="FundMasterID" />
+            <PropertyRef Name="UniqueID" />
           </Key>
           <Property Name="DeptID" Type="Int32" Nullable="false" />
           <Property Name="FundMasterID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
@@ -179,6 +177,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           <Property Name="TransAmount" Type="Decimal" Precision="9" Scale="2" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Department" Relationship="Self.FK_Dept" FromRole="Transactions" ToRole="Departments" />
           <NavigationProperty Name="Funding_Sources" Relationship="Self.FK_FundMasterID" FromRole="Transactions" ToRole="Funding_Sources" />
+          <Property Name="UniqueID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="database_firewall_rules">
           <Key>
@@ -292,6 +291,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="transcendenceModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
                 <ScalarProperty Name="DeptID" ColumnName="DeptID" />
                 <ScalarProperty Name="FundMasterID" ColumnName="FundMasterID" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />

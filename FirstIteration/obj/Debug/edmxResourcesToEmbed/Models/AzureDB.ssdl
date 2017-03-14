@@ -13,7 +13,7 @@
     </Key>
     <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
     <Property Name="FundCategory" Type="char" MaxLength="10" Nullable="false" />
-    <Property Name="FundCodeName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="FundCodeName" Type="char" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Staff">
     <Key>
@@ -25,9 +25,9 @@
   </EntityType>
   <EntityType Name="Transactions">
     <Key>
-      <PropertyRef Name="DeptID" />
-      <PropertyRef Name="FundMasterID" />
+      <PropertyRef Name="UniqueID" />
     </Key>
+    <Property Name="UniqueID" Type="int" Nullable="false" />
     <Property Name="DeptID" Type="int" Nullable="false" />
     <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
     <Property Name="TransType" Type="char" MaxLength="10" Nullable="false" />

@@ -30,6 +30,7 @@
     <EntitySetMapping Name="Transactions">
       <EntityTypeMapping TypeName="transcendenceModel.Transaction">
         <MappingFragment StoreEntitySet="Transactions">
+          <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
           <ScalarProperty Name="DeptID" ColumnName="DeptID" />
           <ScalarProperty Name="FundMasterID" ColumnName="FundMasterID" />
           <ScalarProperty Name="TransType" ColumnName="TransType" />
