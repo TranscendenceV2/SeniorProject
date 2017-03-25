@@ -9,19 +9,39 @@ namespace FirstIteration.Services
     public class FundingSourceServices
     {
         /* returns all funding sources that match dept ID */
-        public IEnumerable<Object> GetFundingSourceList(int id)
+        public List<FundingCategoryObject> GetFundingCategoryList(int id)
         {
-            
+
+            var fundCategoryList = new List<FundingCategoryObject>();
             using (var context = new transcendenceEntities())
             {
                 var allFundSources = (from s in context.Transactions
                          where s.DeptID == id
                          select s).ToList();
-                var formattedFundList = allFundSources.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });
-                return formattedFundList;
+                fundCategoryList = allFundSources.GroupBy(g => new { text = g.Funding_Sources.FundCategory}).Select(m => new FundingCategoryObject { value = m.Key.text, text = m.Key.text } ).ToList();
             }
-            
+            return fundCategoryList;
 
+        }
+
+        public List<FundingCategoryObject> GetFundCodeNameList(int id, string text)
+        {
+            string compare = string.Concat(text.Take(3));
+            var fundCodeNameList = new List<FundingCategoryObject>();
+            using (var context = new transcendenceEntities())
+            {
+                var allFundSources = (from s in context.Transactions
+                                      where s.DeptID == id && s.Funding_Sources.FundCategory.Contains(compare)
+                                      select s).ToList();
+                fundCodeNameList = allFundSources.GroupBy(g => new { value = g.FundMasterID, text = g.Funding_Sources.FundCodeName }).Select(m => new FundingCategoryObject { value = m.Key.value, text = m.Key.text }).ToList();
+            }
+            return fundCodeNameList;
+        }
+
+        public class FundingCategoryObject
+        {
+            public string value;
+            public string text;
         }
     }
 }

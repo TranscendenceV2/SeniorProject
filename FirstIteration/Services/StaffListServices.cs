@@ -22,8 +22,6 @@ namespace FirstIteration.Services
                 
                 
             }
-            //staffList.Select(m => new { value = m.StaffID, text = m.StaffName });
-            // return new SelectList(staffList, "DeptID", "DeptName");
             return allStaff;
         }
     }

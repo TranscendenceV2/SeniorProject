@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+}
+@model FirstIteration.Models.transcendenceEntities
+<script src="../../Scripts/DropDownLists.js"></script>
+<div id="FundDDLs" style="width:100%; height:100%">
+    <ul class="nav">
+        <li class="active" style="padding: 10px 15px;">
+            <label for="sel1">Department:</label>
+            @Html.DropDownListFor(m => m.Departments, (IEnumerable<SelectListItem>)ViewBag.Department, "--Select Department--", new { @class = "form-control", id = "ddldepartment" })
+        </li>
+        <li class="active" style="padding: 10px 15px;">
+            <label for="sel1">Employee:</label>
+            <select id="ddlstaff" name="staff_id" class="form-control">
+                <option value="">--Select Staff Member--</option>
+            </select>
+        </li>
+        <li class="active" style="padding: 10px 15px;">
+            <button type="button" class="form-control" id="generate">Click Me!</button>
+        </li>
+    </ul>
+</div>
+
+

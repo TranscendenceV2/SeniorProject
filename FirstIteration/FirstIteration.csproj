@@ -324,6 +324,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\light-bootstrap-dashboard.js" />
+    <Content Include="Scripts\LoadLists.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -369,6 +370,8 @@
     <Content Include="Views\Chart\_PieChart.cshtml" />
     <Content Include="Views\Chart\_Table.cshtml" />
     <Content Include="Views\Chart\_Stats.cshtml" />
+    <Content Include="Views\Chart\_FundingSourceDropDowns.cshtml" />
+    <Content Include="Views\Chart\_EmployeeDropDowns.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

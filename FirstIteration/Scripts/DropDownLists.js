@@ -1,6 +1,7 @@
 ﻿$(function () {
     $('#ddldepartment').change(function () {
         var sub = $('#ddldepartment').val();
+        $('#ddlfundcodename').html(' <option value="">--No Data Selected--</option>');
         if (sub != null && sub != "") {
             $('#ddlstaff').html(' <option value="">--Select Staff Member--</option>');
             $.ajax({
@@ -20,34 +21,63 @@
             });
         }
         else {
-            $('#ddlstaff').html(' <option value="">--Select State--</option>');
+            $('#ddlstaff').html(' <option value="">--No Data Selected--</option>');
         }
     });
 });
 
-/*$(function () {
+$(function () {
     $('#ddldepartment').change(function () {
         var sub = $('#ddldepartment').val();
+        $('#ddlfundcodename').html(' <option value="">--No Data Selected--</option>');
         if (sub != null && sub != "") {
-            $('#ddlfunding').html(' <option value="">--Select Funding Source--</option>');
+            $('#ddlfundcategory').html(' <option value="">--Select Funding Category--</option>');
             $.ajax({
-                url: '/Chart/FundingSourceList',
+                url: '/Chart/FundingCategoryList',
                 data: { id: sub },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
                         $.each(data, function (i, item) {
-                            $("#ddlfunding").append($("<option></option>").val(item.text).html(item.Value));
+                            $("#ddlfundcategory").append($("<option></option>").html(item.text));
                         });
                     }
                     else {
-                        $('#ddlfunding').html(' <option value="">--No Funding Sources Detected--</option>');
+                        $('#ddlfundcategory').html(' <option value="">--No Funding Categories Detected--</option>');
                     }
                 }
             });
         }
         else {
-            $('#ddlstaff').html(' <option value="">--Select State--</option>');
+            $('#ddlfundcategory').html(' <option value="">--No Data Selected--</option>');
         }
     });
-});*/
+});
+
+$(function () {
+    $('#ddlfundcategory').change(function () {
+        var sub1 = $('#ddldepartment').val();
+        var sub2 = $('#ddlfundcategory option:selected').text();
+        if (sub1 != null && sub1 != "") {
+            $('#ddlfundcodename').html(' <option value="">--Select Funding Code Name--</option>');
+            $.ajax({
+                url: '/Chart/FundingCodeNameList',
+                data: { id: sub1, text: sub2 },
+                type: 'post',
+                success: function (data) {
+                    if (data != null && data != "") {
+                        $.each(data, function (i, item) {
+                            $("#ddlfundcodename").append($("<option></option>").val(item.Value).html(item.text));
+                        });
+                    }
+                    else {
+                        $('#ddlfundcodename').html(' <option value="">--No Fund Code Name Detected--</option>');
+                    }
+                }
+            });
+        }
+        else {
+            $('#ddlfundcodename').html(' <option value="">--No Data Selected--</option>');
+        }
+    });
+});

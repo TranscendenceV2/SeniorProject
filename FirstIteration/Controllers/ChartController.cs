@@ -24,8 +24,18 @@ namespace FirstIteration.Controllers
         {
             ViewBag.Department = DeptService.GetAllDepartments();
             return View();
-            
-            
+        }
+
+        public PartialViewResult _FundingSourceDropDowns()
+        {
+            ViewBag.Department = DeptService.GetAllDepartments();
+            return PartialView();
+        }
+
+        public PartialViewResult _EmployeeDropDowns()
+        {
+            ViewBag.Department = DeptService.GetAllDepartments();
+            return PartialView();
         }
 
         public ActionResult _BarChart()
@@ -43,16 +53,6 @@ namespace FirstIteration.Controllers
             return View();
         }
 
-        public ActionResult _Table()
-        {
-            return View();
-        }
-
-        public ActionResult _Stats()
-        {
-            return View();
-        }
-
         public JsonResult StaffList(int Id)
         {
             var staffList = StaffService.GetStaffList(Id);
@@ -60,16 +60,17 @@ namespace FirstIteration.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        /*public JsonResult FundingSourceList(int Id)
+        public JsonResult FundingCategoryList(int Id)
         {
-            var transactions = (from t in db.Transactions
-                                where t.DeptID == Id
-                                select t).ToList();
-            var list = transactions.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName });
+            var fundCategoryList = FundService.GetFundingCategoryList(Id);
+            return Json(fundCategoryList, JsonRequestBehavior.AllowGet);
+        }
 
-            var fundList = FundService.GetFundingSourceList(Id);
-            return Json(fundList, JsonRequestBehavior.AllowGet);
-        }*/
+        public JsonResult FundingCodeNameList(int Id, string text)
+        {
+            var fundCodeNameList = FundService.GetFundCodeNameList(Id, text);
+            return Json(fundCodeNameList, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult LineData(int Id)
         {
