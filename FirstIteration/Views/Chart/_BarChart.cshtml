@@ -1,5 +1,22 @@
 ﻿<script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="../../Scripts/DashboardCharts.js"></script>
+<script src="../../Scripts/BarCharts.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/Chart/BarData',
+            type: 'post',
+            success: function (data) {
+                if (data != null && data != "") {
+                    //alert(JSON.stringify(data));
+                    drawColumn(data);
+                }
+                else {
+                    alert('data is null');
+                }
+            }
+        });
+    });
+</script>
 <div id="visualization" style="width:100%; height:100%">
 </div> 

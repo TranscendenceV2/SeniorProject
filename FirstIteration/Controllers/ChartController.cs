@@ -19,6 +19,8 @@ namespace FirstIteration.Controllers
         private static StaffListServices StaffService = new StaffListServices();
         private static FundingSourceServices FundService = new FundingSourceServices();
         private static DepartmentServices DeptService = new DepartmentServices();
+        private static BarChartServices BarService = new BarChartServices();
+        private static PieChartServices PieService = new PieChartServices();
 
         public ActionResult Dashboard()
         {
@@ -72,11 +74,49 @@ namespace FirstIteration.Controllers
             return Json(fundCodeNameList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult LineData(int Id)
+        public JsonResult LineData(int? Id)
         {
-            var list = LineService.GetTransactionsByDeptID(Id).Select(m => new { name = m.Key, data = m.Value });
-            //var data = list.Select(m => new { name = m.Key, value = m.Value });
-            return Json(list, JsonRequestBehavior.AllowGet);
+            if(Id == null)
+            {
+                var allData = LineService.GetAllTransactions().Select(m => new { name = m.Key, data = m.Value });
+                return Json(allData, JsonRequestBehavior.AllowGet);
+            }else
+            {
+                var list = LineService.GetTransactionsByDeptID(Id).Select(m => new { name = m.Key, data = m.Value });
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            
+        }
+
+        public JsonResult BarData(int? Id)
+        {
+            if (Id == null)
+            {
+                var allData = BarService.GetAllTransactions().Select(m => new { name = m.Key, data = m.Value });
+                return Json(allData, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var list = BarService.GetTransactionsByDeptID(Id).Select(m => new { name = m.Key, data = m.Value });
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult PieData(int? Id)
+        {
+            if (Id == null)
+            {
+                var allData = PieService.GetAllTransactions();
+
+                var test = new { name = "Clay Revenue", data = allData.Select(j => new { name = j.Key, y = j.Value.Single() } ) };
+
+                return Json(test, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var list = PieService.GetTransactionsByDeptID(Id);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
