@@ -15,8 +15,8 @@ namespace FirstIteration.Services
             {
                 var allTransactions = context.Transactions.OrderBy(m => m.TransDate).ToList();
                 var sum = allTransactions.Sum(g => g.TransAmount);
-                var byMonth = allTransactions.GroupBy(m => m.Funding_Sources.FundCategory).Select(l => new DateObject() { fundName = l.Key, transAmount = ((l.Sum(k => k.TransAmount) / sum ) * 100) });
-                byFundSource = byMonth.OrderBy(v => v.transAmount).GroupBy(m => m.fundName).ToDictionary(t => t.Key, t => t.Select(g => g.transAmount).ToList());
+                var getPercentages = allTransactions.GroupBy(m => m.Funding_Sources.FundCategory).Select(l => new DateObject() { fundName = l.Key, transAmount = ((l.Sum(k => k.TransAmount) / sum ) * 100) });
+                byFundSource = getPercentages.OrderBy(v => v.transAmount).GroupBy(m => m.fundName).ToDictionary(t => t.Key, t => t.Select(g => g.transAmount).ToList());
             }
             return byFundSource;
         }
@@ -28,8 +28,9 @@ namespace FirstIteration.Services
             using (var context = new transcendenceEntities())
             {
                 var allTransactions = context.Transactions.Where(t => t.DeptID == id).OrderBy(m => m.TransDate).ToList();
-                var byMonth = allTransactions.GroupBy(m => new { m.Funding_Sources.FundCodeName, m.TransDate.Month }).Select(m => new DateObject() { fundName = m.Key.FundCodeName, transAmount = m.Sum(k => k.TransAmount) });
-                byFundSource = byMonth.GroupBy(m => m.fundName).ToDictionary(t => t.Key, t => t.Select(g => g.transAmount).ToList());
+                var sum = allTransactions.Sum(g => g.TransAmount);
+                var getPercentages = allTransactions.GroupBy(m => m.Funding_Sources.FundCategory).Select(l => new DateObject() { fundName = l.Key, transAmount = ((l.Sum(k => k.TransAmount) / sum) * 100) });
+                byFundSource = getPercentages.OrderBy(v => v.transAmount).GroupBy(m => m.fundName).ToDictionary(t => t.Key, t => t.Select(g => g.transAmount).ToList());
 
             }
             return byFundSource;

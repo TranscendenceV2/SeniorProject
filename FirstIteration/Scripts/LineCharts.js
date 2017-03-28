@@ -1,10 +1,22 @@
 $(function () {
-    $('#generate').click(function () {
+    $('#generate').on('click', function () {
         var dept = $('#ddldepartment').val();
+        var fund = $('fundddl').val();
+        var empl = $('empddl').val();
+        var obj;
+
+        if(fund == null){
+            obj = { id: dept, employee: empl }
+        }else if(empl == null){
+            obj = { id: dept, subject: fund }
+        } else {
+            obj = { id: dept }
+        }
+        
         if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/LineData',
-                data: { id: dept },
+                data: obj,
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {

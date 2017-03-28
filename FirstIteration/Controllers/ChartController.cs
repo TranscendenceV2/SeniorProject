@@ -114,8 +114,9 @@ namespace FirstIteration.Controllers
             }
             else
             {
-                var list = PieService.GetTransactionsByDeptID(Id);
-                return Json(list, JsonRequestBehavior.AllowGet);
+                var allData = PieService.GetTransactionsByDeptID(Id);
+                var test = new { name = "Clay Revenue", data = allData.Select(j => new { name = j.Key, y = j.Value.Single() }) };
+                return Json(test, JsonRequestBehavior.AllowGet);
             }
         }
     }

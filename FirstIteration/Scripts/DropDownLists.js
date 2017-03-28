@@ -54,7 +54,7 @@ $(function () {
     });
 });
 
-$(function () {
+/**$(function () {
     $('#ddlfundcategory').change(function () {
         var sub1 = $('#ddldepartment').val();
         var sub2 = $('#ddlfundcategory option:selected').text();
@@ -80,4 +80,4 @@ $(function () {
             $('#ddlfundcodename').html(' <option value="">--No Data Selected--</option>');
         }
     });
-});
+});**/

@@ -26,7 +26,6 @@ namespace FirstIteration.Services
          * funding source name and transaction amount */
         public Dictionary<string, List<decimal?>> GetTransactionsByDeptID(int? id)
         {
-
             Dictionary<string, List<decimal?>> test;
             using (var context = new transcendenceEntities())
             {
