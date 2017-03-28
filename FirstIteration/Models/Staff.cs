@@ -14,10 +14,18 @@ namespace FirstIteration.Models
     
     public partial class Staff
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Staff()
+        {
+            this.Transactions = new HashSet<Transaction>();
+        }
+    
         public int StaffID { get; set; }
         public int DeptID { get; set; }
         public string StaffName { get; set; }
     
         public virtual Department Department { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

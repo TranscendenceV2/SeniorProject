@@ -13,6 +13,7 @@
         <AssociationConnector Association="transcendenceModel.FK_Dept" ManuallyRouted="false" />
         <AssociationConnector Association="transcendenceModel.FK_DeptID" ManuallyRouted="false" />
         <AssociationConnector Association="transcendenceModel.FK_FundMasterID" ManuallyRouted="false" />
+        <AssociationConnector Association="transcendenceModel.FK_Staff" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

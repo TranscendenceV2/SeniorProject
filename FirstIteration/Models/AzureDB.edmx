@@ -34,6 +34,7 @@
           </Key>
           <Property Name="UniqueID" Type="int" Nullable="false" />
           <Property Name="DeptID" Type="int" Nullable="false" />
+          <Property Name="StaffID" Type="int" Nullable="false" />
           <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="TransType" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="TransDate" Type="date" Nullable="false" />
@@ -103,6 +104,18 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="transcendenceModelStoreContainer">
           <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Funding_Sources" EntityType="Self.Funding_Sources" Schema="dbo" store:Type="Tables" />
@@ -128,6 +141,10 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           </AssociationSet>
           <AssociationSet Name="FK_FundMasterID" Association="Self.FK_FundMasterID">
             <End Role="Funding_Sources" EntitySet="Funding_Sources" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff" Association="Self.FK_Staff">
+            <End Role="Staff" EntitySet="Staff" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
         </EntityContainer>
@@ -161,6 +178,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           <Property Name="DeptID" Type="Int32" Nullable="false" />
           <Property Name="StaffName" Type="String" MaxLength="35" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Department" Relationship="Self.FK_DeptID" FromRole="Staff" ToRole="Departments" />
+          <NavigationProperty Name="Transactions" Relationship="transcendenceModel.FK_Staff" FromRole="Staff" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -178,6 +196,8 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           <NavigationProperty Name="Department" Relationship="Self.FK_Dept" FromRole="Transactions" ToRole="Departments" />
           <NavigationProperty Name="Funding_Sources" Relationship="Self.FK_FundMasterID" FromRole="Transactions" ToRole="Funding_Sources" />
           <Property Name="UniqueID" Type="Int32" Nullable="false" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="transcendenceModel.FK_Staff" FromRole="Transaction" ToRole="Staff" />
         </EntityType>
         <EntityType Name="database_firewall_rules">
           <Key>
@@ -255,7 +275,23 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
             <End Role="Funding_Sources" EntitySet="Funding_Sources" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
+          <AssociationSet Name="FK_Staff" Association="transcendenceModel.FK_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Staff">
+          <End Type="transcendenceModel.Staff" Role="Staff" Multiplicity="1" />
+          <End Type="transcendenceModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -291,6 +327,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="transcendenceModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
                 <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
                 <ScalarProperty Name="DeptID" ColumnName="DeptID" />
                 <ScalarProperty Name="FundMasterID" ColumnName="FundMasterID" />
