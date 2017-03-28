@@ -1,10 +1,11 @@
 ﻿$(function () {
     $('#generate').click(function () {
         var dept = $('#ddldepartment').val();
+        var fund = $('#ddlfundcategory option:selected').text();
         if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/PieData',
-                data: { id: dept },
+                data: { id: dept, source: fund },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {

@@ -21,13 +21,20 @@ namespace FirstIteration.Services
             return byFundSource;
         }
 
-        public Dictionary<string, List<decimal?>> GetTransactionsByDeptID(int? id)
+        public Dictionary<string, List<decimal?>> GetTransactionsByDeptID(int? id, string Source)
         {
-            
+            string str = string.Concat(Source.Take(3));
             Dictionary<string, List<decimal?>> byFundSource;
             using (var context = new transcendenceEntities())
             {
-                var allTransactions = context.Transactions.Where(t => t.DeptID == id).OrderBy(m => m.TransDate).ToList();
+                List<Transaction> allTransactions;
+                if (Source.Contains("--S"))
+                {
+                    allTransactions = context.Transactions.Where(t => t.DeptID == id).OrderBy(m => m.TransDate).ToList();
+                }else
+                {                    
+                    allTransactions = context.Transactions.Where(t => t.DeptID == id && t.Funding_Sources.FundCategory.Contains(str)).OrderBy(m => m.TransDate).ToList();
+                }                
                 var sum = allTransactions.Sum(g => g.TransAmount);
                 var getPercentages = allTransactions.GroupBy(m => m.Funding_Sources.FundCategory).Select(l => new DateObject() { fundName = l.Key, transAmount = ((l.Sum(k => k.TransAmount) / sum) * 100) });
                 byFundSource = getPercentages.OrderBy(v => v.transAmount).GroupBy(m => m.fundName).ToDictionary(t => t.Key, t => t.Select(g => g.transAmount).ToList());

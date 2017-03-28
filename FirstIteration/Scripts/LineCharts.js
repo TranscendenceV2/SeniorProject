@@ -1,22 +1,11 @@
 $(function () {
     $('#generate').on('click', function () {
         var dept = $('#ddldepartment').val();
-        var fund = $('fundddl').val();
-        var empl = $('empddl').val();
-        var obj;
-
-        if(fund == null){
-            obj = { id: dept, employee: empl }
-        }else if(empl == null){
-            obj = { id: dept, subject: fund }
-        } else {
-            obj = { id: dept }
-        }
-        
+        var fund = $('#ddlfundcategory option:selected').text();
         if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/LineData',
-                data: obj,
+                data: { id: dept, source: fund },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
@@ -31,7 +20,7 @@ $(function () {
             });
                     
         } else {
-            alert('No Department Selected!');
+            alert('No Department Selected!');            
         }
 
     });

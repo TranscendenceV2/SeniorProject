@@ -24,13 +24,22 @@ namespace FirstIteration.Services
         /* collects all transactions associated with the department ID
          * Groups these transactions by funding source, and returns a dictionary containing
          * funding source name and transaction amount */
-        public Dictionary<string, List<decimal?>> GetTransactionsByDeptID(int? id)
+        public Dictionary<string, List<decimal?>> GetTransactionsByDeptID(int? id, string Source)
         {
+            string str = string.Concat(Source.Take(3));
             Dictionary<string, List<decimal?>> test;
             using (var context = new transcendenceEntities())
             {
-                var allTransactions = context.Transactions.Where(t => t.DeptID == id).OrderBy(m => m.TransDate).ToList();
-                var byFundSource = allTransactions.GroupBy(m => new { m.Funding_Sources.FundCodeName, m.TransDate.Month }).Select(m => new DateObject() { fundName = m.Key.FundCodeName, transAmount = m.Sum(k => k.TransAmount) });              
+                List<Transaction> allTransactions;
+                if (Source.Contains("--S"))
+                {
+                    allTransactions = context.Transactions.Where(t => t.DeptID == id).OrderBy(m => m.TransDate).ToList();
+                }else
+                {                    
+                    allTransactions = context.Transactions.Where(t => t.DeptID == id && t.Funding_Sources.FundCategory.Contains(str)).OrderBy(m => m.TransDate).ToList();
+                }
+                
+                var byFundSource = allTransactions.GroupBy(m => new { m.Funding_Sources.FundCategory, m.TransDate.Month }).Select(m => new DateObject() { fundName = m.Key.FundCategory, transAmount = m.Sum(k => k.TransAmount) });              
                 test = byFundSource.GroupBy(m => m.fundName).ToDictionary(t => t.Key, t => t.Select(g => g.transAmount).ToList());
             }
             //var t = transactions.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName }).GroupBy(m => m.text);

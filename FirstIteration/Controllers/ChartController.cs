@@ -74,7 +74,7 @@ namespace FirstIteration.Controllers
             return Json(fundCodeNameList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult LineData(int? Id)
+        public JsonResult LineData(int? Id, string Source)
         {
             if(Id == null)
             {
@@ -82,13 +82,13 @@ namespace FirstIteration.Controllers
                 return Json(allData, JsonRequestBehavior.AllowGet);
             }else
             {
-                var list = LineService.GetTransactionsByDeptID(Id).Select(m => new { name = m.Key, data = m.Value });
+                var list = LineService.GetTransactionsByDeptID(Id, Source).Select(m => new { name = m.Key, data = m.Value });
                 return Json(list, JsonRequestBehavior.AllowGet);
             }
             
         }
 
-        public JsonResult BarData(int? Id)
+        public JsonResult BarData(int? Id, string Source)
         {
             if (Id == null)
             {
@@ -97,12 +97,12 @@ namespace FirstIteration.Controllers
             }
             else
             {
-                var list = BarService.GetTransactionsByDeptID(Id).Select(m => new { name = m.Key, data = m.Value });
+                var list = BarService.GetTransactionsByDeptID(Id, Source).Select(m => new { name = m.Key, data = m.Value });
                 return Json(list, JsonRequestBehavior.AllowGet);
             }
         }
 
-        public JsonResult PieData(int? Id)
+        public JsonResult PieData(int? Id, string Source)
         {
             if (Id == null)
             {
@@ -114,7 +114,7 @@ namespace FirstIteration.Controllers
             }
             else
             {
-                var allData = PieService.GetTransactionsByDeptID(Id);
+                var allData = PieService.GetTransactionsByDeptID(Id, Source);
                 var test = new { name = "Clay Revenue", data = allData.Select(j => new { name = j.Key, y = j.Value.Single() }) };
                 return Json(test, JsonRequestBehavior.AllowGet);
             }
