@@ -2,7 +2,7 @@ $(function () {
     $('#generate').on('click', function () {
         var dept = $('#ddldepartment').val();
         var fund = $('#ddlfundcategory option:selected').text();
-        if (dept != null && dept != "") {
+        //if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/LineData',
                 data: { id: dept, source: fund },
@@ -19,9 +19,9 @@ $(function () {
                 }
             });
                     
-        } else {
-            alert('No Department Selected!');            
-        }
+        //} else {
+         //   alert('No Department Selected!');            
+        //}
 
     });
 });
