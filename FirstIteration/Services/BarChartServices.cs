@@ -41,6 +41,18 @@ namespace FirstIteration.Services
             return byFundSource;
         }
 
+        public Dictionary<string, List<decimal?>> GetEmployeeTransactions(int? id, int? empl)
+        {
+            Dictionary<string, List<decimal?>> byFundSource;
+            using (var context = new transcendenceEntities())
+            {
+                var allTransactions = context.Transactions.Where(g => g.DeptID == id && g.StaffID == empl).OrderBy(m => m.TransDate).ToList();
+                var byMonth = allTransactions.GroupBy(m => new { m.Funding_Sources.FundCategory, m.TransDate.Month }).Select(m => new DateObject() { fundName = m.Key.FundCategory, transAmount = m.Sum(k => k.TransAmount) });
+                byFundSource = byMonth.OrderBy(v => v.transAmount).GroupBy(m => m.fundName).ToDictionary(t => t.Key, t => t.Select(g => g.transAmount).ToList());
+            }
+            return byFundSource;
+        }
+
         public class DateObject
         {
             public string fundName;

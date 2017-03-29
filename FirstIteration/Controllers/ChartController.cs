@@ -74,7 +74,7 @@ namespace FirstIteration.Controllers
             return Json(fundCodeNameList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult LineData(int? Id, string Source)
+        public JsonResult LineData(int? Id, string Source, int? employee)
         {
             if(Id == null)
             {
@@ -82,13 +82,22 @@ namespace FirstIteration.Controllers
                 return Json(allData, JsonRequestBehavior.AllowGet);
             }else
             {
-                var list = LineService.GetTransactionsByDeptID(Id, Source).Select(m => new { name = m.Key, data = m.Value });
-                return Json(list, JsonRequestBehavior.AllowGet);
+                if (employee == null)
+                {
+                    var list = LineService.GetTransactionsByDeptID(Id, Source).Select(m => new { name = m.Key, data = m.Value });
+                    return Json(list, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var employeeData = LineService.GetEmployeeTransactions(Id, employee).Select(m => new { name = m.Key, data = m.Value });
+                    return Json(employeeData, JsonRequestBehavior.AllowGet);
+                }
+                
             }
             
         }
 
-        public JsonResult BarData(int? Id, string Source)
+        public JsonResult BarData(int? Id, string Source, int? employee)
         {
             if (Id == null)
             {
@@ -97,12 +106,21 @@ namespace FirstIteration.Controllers
             }
             else
             {
-                var list = BarService.GetTransactionsByDeptID(Id, Source).Select(m => new { name = m.Key, data = m.Value });
-                return Json(list, JsonRequestBehavior.AllowGet);
+                if (employee == null)
+                {
+                    var list = BarService.GetTransactionsByDeptID(Id, Source).Select(m => new { name = m.Key, data = m.Value });
+                    return Json(list, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var employeeData = BarService.GetEmployeeTransactions(Id, employee).Select(m => new { name = m.Key, data = m.Value });
+                    return Json(employeeData, JsonRequestBehavior.AllowGet);
+                }
+                
             }
         }
 
-        public JsonResult PieData(int? Id, string Source)
+        public JsonResult PieData(int? Id, string Source, int? employee)
         {
             if (Id == null)
             {
@@ -114,9 +132,19 @@ namespace FirstIteration.Controllers
             }
             else
             {
-                var allData = PieService.GetTransactionsByDeptID(Id, Source);
-                var test = new { name = "Clay Revenue", data = allData.Select(j => new { name = j.Key, y = j.Value.Single() }) };
-                return Json(test, JsonRequestBehavior.AllowGet);
+                if(employee == null)
+                {
+                    var allData = PieService.GetTransactionsByDeptID(Id, Source);
+                    var test = new { name = "Clay Revenue", data = allData.Select(j => new { name = j.Key, y = j.Value.Single() }) };
+                    return Json(test, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var employeeData = PieService.GetEmployeeTransactions(Id, employee);
+                    var test = new { name = "Clay Revenue", data = employeeData.Select(j => new { name = j.Key, y = j.Value.Single() }) };
+                    return Json(test, JsonRequestBehavior.AllowGet);
+                }
+                
             }
         }
     }

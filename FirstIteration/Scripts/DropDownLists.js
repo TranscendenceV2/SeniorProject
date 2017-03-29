@@ -11,7 +11,7 @@
                 success: function (data) {
                     if (data != null && data != "") {
                         $.each(data, function (i, item) {                            
-                            $("#ddlstaff").append($("<option></option>").val(item.Value).html(item.text));
+                            $("#ddlstaff").append($("<option></option>").val(item.value).html(item.text));
                         });
                     }
                     else {

@@ -26,6 +26,7 @@
     <Property Name="DeptID" Type="Int32" Nullable="false" />
     <Property Name="StaffName" Type="String" MaxLength="35" FixedLength="true" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Department" Relationship="Self.FK_DeptID" FromRole="Staff" ToRole="Departments" />
+    <NavigationProperty Name="Transactions" Relationship="transcendenceModel.FK_Staff" FromRole="Staff" ToRole="Transaction" />
   </EntityType>
   <EntityType Name="Transaction">
     <Key>
@@ -43,6 +44,8 @@
     <NavigationProperty Name="Department" Relationship="Self.FK_Dept" FromRole="Transactions" ToRole="Departments" />
     <NavigationProperty Name="Funding_Sources" Relationship="Self.FK_FundMasterID" FromRole="Transactions" ToRole="Funding_Sources" />
     <Property Name="UniqueID" Type="Int32" Nullable="false" />
+    <Property Name="StaffID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Staff" Relationship="transcendenceModel.FK_Staff" FromRole="Transaction" ToRole="Staff" />
   </EntityType>
   <EntityType Name="database_firewall_rules">
     <Key>
@@ -120,5 +123,21 @@
       <End Role="Funding_Sources" EntitySet="Funding_Sources" />
       <End Role="Transactions" EntitySet="Transactions" />
     </AssociationSet>
+    <AssociationSet Name="FK_Staff" Association="transcendenceModel.FK_Staff">
+      <End Role="Staff" EntitySet="Staffs" />
+      <End Role="Transaction" EntitySet="Transactions" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK_Staff">
+    <End Type="transcendenceModel.Staff" Role="Staff" Multiplicity="1" />
+    <End Type="transcendenceModel.Transaction" Role="Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="StaffID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

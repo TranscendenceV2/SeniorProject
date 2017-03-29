@@ -26,6 +26,34 @@
     });
 });
 
+$(function () {
+    $('#employee').click(function () {
+        var dept = $('#ddldepartment').val();
+        var empl = $('#ddlstaff').val();
+        if (empl != null && empl != "") {
+            $.ajax({
+                url: '/Chart/PieData',
+                data: { id: dept, employee: empl },
+                type: 'post',
+                success: function (data) {
+                    if (data != null && data != "") {
+                        //alert(JSON.stringify(data));
+                        //console.log(JSON.stringify(data));
+                        drawPie(data);
+                    }
+                    else {
+                        alert('Employee has no transactions');
+                    }
+                }
+            });
+
+        } else {
+            alert('No Employee Selected!');
+        }
+
+    });
+});
+
 function drawPie(d) {
     Highcharts.chart('pie_div', {
         chart: {
