@@ -84,9 +84,10 @@ function drawLine(jsonData) {
             }
         },
         legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
+            y : 25
         },
         series: jsonData,
     });
