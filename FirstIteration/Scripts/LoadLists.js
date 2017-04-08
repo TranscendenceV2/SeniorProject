@@ -1,13 +1,14 @@
 $(function () {
     var sub = $("input[name=options]:checked").val();
     $('#filterDay').change(function () {
-        if (isOptionValid($("input[name=options]:checked").val()))
+        var temp = $("input[name=options]:checked").val();
+        if (isOptionValid(temp) && temp !== sub){
             sub = $("input[name=options]:checked").val();
-
-        if (sub == 2)
-            $("#loadpartial").load('/Chart/_EmployeeDropDowns');
-        else
-            $("#loadpartial").load('/Chart/_FundingSourceDropDowns');
+            if (sub == 2)
+                $("#loadpartial").load('/Chart/_EmployeeDropDowns');
+            else
+                $("#loadpartial").load('/Chart/_FundingSourceDropDowns');
+        }               
     })
 });
 
