@@ -47,8 +47,8 @@ $(function () {
                 }
             });
 
-        } else {
-            alert('No Employee Selected!');
+        //} else {
+           // alert('No Employee Selected!');
         }
 
     });

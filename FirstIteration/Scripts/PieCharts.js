@@ -13,9 +13,9 @@
                         //console.log(JSON.stringify(data));
                         drawPie(data);
                     }
-                    else {
-                        alert('data is null');
-                    }
+                    //else {
+                        //alert('data is null');
+                    //}
                 }
             });
 
@@ -40,15 +40,16 @@ $(function () {
                         //alert(JSON.stringify(data));
                         //console.log(JSON.stringify(data));
                         drawPie(data);
-                    }
-                    else {
-                        alert('Employee has no transactions');
-                    }
+                    }                    
                 }
             });
 
+        //} else {
+            //alert('No Employee Selected!');
+        } else if(dept != "" && empl == ""){
+            alert("Please select an employee")
         } else {
-            alert('No Employee Selected!');
+            alert("Please select a department")
         }
 
     });

@@ -13,9 +13,9 @@
                         //console.log(JSON.stringify(data));
                         drawColumn(data);
                     }
-                    else {
-                        alert('data is null');
-                    }
+                    //else {
+                        //alert('data is null');
+                    //}
                 }
             });
 
@@ -41,14 +41,11 @@ $(function () {
                         //console.log(JSON.stringify(data));
                         drawColumn(data);
                     }
-                    else {
-                        alert('Employee has no Transactions');
-                    }
                 }
             });
 
-        } else {
-            alert('No Employee Selected!');
+        //} else {
+            //alert('No Employee Selected!');
         }
 
     });
