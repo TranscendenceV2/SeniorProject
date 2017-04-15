@@ -1,11 +1,12 @@
 $(function () {
     $('#generate').on('click', function () {
         var dept = $('#ddldepartment').val();
+        var year = $('#ddlyear').val();
         var fund = $('#ddlfundcategory option:selected').text();
         //if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/LineData',
-                data: { id: dept, source: fund },
+                data: { id: dept, source: fund, year: year },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
@@ -29,11 +30,12 @@ $(function () {
 $(function () {
     $('#employee').on('click', function () {
         var dept = $('#ddldepartment').val();
+        var year = $('#ddlyear').val();
         var empl = $('#ddlstaff').val();
         if (empl != null && empl != "") {
             $.ajax({
                 url: '/Chart/LineData',
-                data: { id: dept, employee: empl },
+                data: { id: dept, employee: empl, year: year },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {

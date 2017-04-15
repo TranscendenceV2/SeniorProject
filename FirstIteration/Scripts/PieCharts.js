@@ -1,11 +1,14 @@
 ﻿$(function () {
     $('#generate').click(function () {
         var dept = $('#ddldepartment').val();
-        var fund = $('#ddlfundcategory option:selected').text();
+        var year = $('#ddlyear').val();
+        var fund = $('#ddlfundcategory option:selected').text().replace("\n", "").trim();
+        //console.log("fund = " + fund);
+        fund = fund.includes("--") ? undefined : fund;
         //if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/PieData',
-                data: { id: dept, source: fund },
+                data: { id: dept, source: fund, year: year },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
@@ -29,11 +32,12 @@
 $(function () {
     $('#employee').click(function () {
         var dept = $('#ddldepartment').val();
+        var year = $('#ddlyear').val();
         var empl = $('#ddlstaff').val();
         if (empl != null && empl != "") {
             $.ajax({
                 url: '/Chart/PieData',
-                data: { id: dept, employee: empl },
+                data: { id: dept, employee: empl, year: year },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {

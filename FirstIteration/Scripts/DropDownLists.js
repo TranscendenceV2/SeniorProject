@@ -1,7 +1,7 @@
 ﻿$(function () {
     $('#ddldepartment').change(function () {
         var sub = $('#ddldepartment').val();
-        $('#ddlfundcodename').html(' <option value="">--No Data Selected--</option>');
+        $('#ddlfundcodename').html(' <option value="">--No Department Selected--</option>');
         if (sub != null && sub != "") {
             $('#ddlstaff').html(' <option value="">--Select Staff Member--</option>');
             $.ajax({
@@ -21,7 +21,7 @@
             });
         }
         else {
-            $('#ddlstaff').html(' <option value="">--No Data Selected--</option>');
+            $('#ddlstaff').html(' <option value="">--No Department Selected--</option>');
         }
     });
 });
@@ -29,7 +29,7 @@
 $(function () {
     $('#ddldepartment').change(function () {
         var sub = $('#ddldepartment').val();
-        $('#ddlfundcodename').html(' <option value="">--No Data Selected--</option>');
+        $('#ddlfundcodename').html(' <option value="">--No Department Selected--</option>');
         if (sub != null && sub != "") {
             $('#ddlfundcategory').html(' <option value="">--Select Funding Category--</option>');
             $.ajax({
@@ -49,7 +49,7 @@ $(function () {
             });
         }
         else {
-            $('#ddlfundcategory').html(' <option value="">--No Data Selected--</option>');
+            $('#ddlfundcategory').html(' <option value="">--No Department Selected--</option>');
         }
     });
 });

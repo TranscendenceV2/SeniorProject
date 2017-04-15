@@ -204,6 +204,7 @@
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DataTransferObjects\CategoryAmount.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -226,6 +227,7 @@
     <Compile Include="Models\database_firewall_rules.cs">
       <DependentUpon>AzureDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DbContextExtend.cs" />
     <Compile Include="Models\Department.cs">
       <DependentUpon>AzureDB.tt</DependentUpon>
     </Compile>
@@ -242,7 +244,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BarChartServices.cs" />
-    <Compile Include="Services\DepartmentServices.cs" />
+    <Compile Include="Services\DropDownServices.cs" />
     <Compile Include="Services\FundingSourceServices.cs" />
     <Compile Include="Services\LineChartServices.cs" />
     <Compile Include="Services\PieChartServices.cs" />

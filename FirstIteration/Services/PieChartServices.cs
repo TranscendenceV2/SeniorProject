@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FirstIteration.Models;
 using System.Linq;
 using System.Web;
+using FirstIteration.DataTransferObjects;
 
 namespace FirstIteration.Services
 {
@@ -13,12 +14,19 @@ namespace FirstIteration.Services
             Dictionary<string, List<decimal?>> byFundSource;
             using (var context = new transcendenceEntities())
             {
-                var allTransactions = context.Transactions.OrderBy(m => m.TransDate).ToList();
+                var allTransactions = context.Transactions.ToList();
                 var sum = allTransactions.Sum(g => g.TransAmount);
                 var getPercentages = allTransactions.GroupBy(m => m.Funding_Sources.FundCategory).Select(l => new DateObject() { fundName = l.Key, transAmount = ((l.Sum(k => k.TransAmount) / sum ) * 100) });
                 byFundSource = getPercentages.OrderBy(v => v.transAmount).GroupBy(m => m.fundName).ToDictionary(t => t.Key, t => t.Select(g => g.transAmount).ToList());
             }
             return byFundSource;
+        }
+        public IList<CategoryAmount> GetCategoriesForPie(int? id, string source)
+        {
+            using (var context = new transcendenceEntities())
+            {
+                return context.getCategoryPercents(id, source);
+            }
         }
 
         public Dictionary<string, List<decimal?>> GetTransactionsByDeptID(int? id, string Source)

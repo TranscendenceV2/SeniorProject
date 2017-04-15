@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using FirstIteration.Models;
 using System.Linq;
 using System.Web;
+using FirstIteration.Models;
+using FirstIteration.DataTransferObjects;
 
 namespace FirstIteration.Services
 {
@@ -51,6 +53,14 @@ namespace FirstIteration.Services
             }
             //var t = transactions.Select(m => new { value = m.FundMasterID, text = m.Funding_Sources.FundCodeName }).GroupBy(m => m.text);
             
+        }
+
+        public IList<CategoryAmount> GetCategories(int? id)
+        {
+            using (var context = new transcendenceEntities())
+            {
+                return context.getCategoryAmounts(id);
+            }
         }
 
         public Dictionary<string, List<decimal?>> GetEmployeeTransactions(int? id, int? empl)
