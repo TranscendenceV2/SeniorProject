@@ -10,43 +10,45 @@ namespace FirstIteration.Models
 {
     public partial class transcendenceEntities : DbContext
     {
-        public IList<CategoryAmount> getCategoryAmounts(int? deptid)
+        public IList<CategoryAmount> getCategoryAmounts(int? year, int? deptid, string source, int? staff)
         {
+            year = year ?? this.Transactions.Max(m => m.TransDate.Year);
             var parameters = new[]
             {
-                new SqlParameter("@deptid", deptid)
+                new SqlParameter("@year", year),
+                new SqlParameter("@deptid", deptid ?? (object)DBNull.Value),
+                new SqlParameter("@fundcategory", source ?? (object)DBNull.Value),
+                new SqlParameter("@staffid", staff ?? (object)DBNull.Value)
             };
 
             IList<CategoryAmount> categoryAmounts = this.Database.SqlQuery<CategoryAmount>
-                ("dbo.GetTransCategoriesByDept @deptid",
+                ("dbo.GetTransCategoriesByDept @year, @deptid, @fundcategory, @staffid",
                 parameters).ToList();
 
             return categoryAmounts;
         }
-        public IList<CategoryAmount> getCategoryPercents(int? deptid, string source)
+        public IList<CategoryAmount> getCategoryPercents(int? year, int? deptid, string source, int? staff)
         {
+
+            year = year ?? this.Transactions.Max(m => m.TransDate.Year);
             var parameters = new[]
             {
+                new SqlParameter("@year", year),
                 new SqlParameter("@deptid", deptid ?? (object)DBNull.Value),
-                new SqlParameter("@fundcategory", source ?? (object)DBNull.Value)
+                new SqlParameter("@fundcategory", source ?? (object)DBNull.Value),
+                new SqlParameter("@staffid", staff ?? (object)DBNull.Value)
             };
-            IList<CategoryAmount> categoryAmounts;
-            //if (deptid != null){
-                categoryAmounts = this.Database.SqlQuery<CategoryAmount>
-                ("dbo.GetTransCategoriesForPie @deptid, @fundcategory",
-                parameters).ToList();                
-            //}
-            //else if (deptid != null && source.Length > 2) {
-            //   categoryAmounts = this.Database.SqlQuery<CategoryAmount>
-            //   ("dbo.GetTransCategoriesForPie @deptId, @fundcategory").ToList();
-            //}else
-            //{
 
-            //}
+            IList<CategoryAmount> categoryAmounts = this.Database.SqlQuery<CategoryAmount>
+            ("dbo.GetTransCategoriesForPie @year, @deptid, @fundcategory, @staffid",
+            parameters).ToList();
+
 
             return categoryAmounts;
 
 
         }
+
+
     }
 }

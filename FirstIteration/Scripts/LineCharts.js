@@ -2,7 +2,9 @@ $(function () {
     $('#generate').on('click', function () {
         var dept = $('#ddldepartment').val();
         var year = $('#ddlyear').val();
-        var fund = $('#ddlfundcategory option:selected').text();
+        var fund = $('#ddlfundcategory option:selected').text().replace("\n", "").trim();
+        fund = fund.includes("--") ? undefined : fund;
+        year = year.includes("--") ? undefined : year;
         //if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/LineData',

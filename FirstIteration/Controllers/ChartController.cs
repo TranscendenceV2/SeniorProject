@@ -15,11 +15,11 @@ namespace FirstIteration.Controllers
 {
     public class ChartController : Controller
     {
-        private static LineChartServices LineService = new LineChartServices();
+        //private static LineChartServices LineService = new LineChartServices();
         private static StaffListServices StaffService = new StaffListServices();
         private static FundingSourceServices FundService = new FundingSourceServices();
         private static DropDownServices DropDownService = new DropDownServices();
-        private static BarChartServices BarService = new BarChartServices();
+        private static BarAndLineServices BarService = new BarAndLineServices();
         private static PieChartServices PieService = new PieChartServices();
 
         public ActionResult Dashboard()
@@ -77,73 +77,81 @@ namespace FirstIteration.Controllers
             return Json(fundCodeNameList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult LineData(int? Id, string Source, int? employee, int? Year)
+        public JsonResult LineData(int? Year, int? Id, string Source, int? Employee)
         {
-            if(Id == null)
-            {
-                var allData = LineService.GetAllTransactions().Select(m => new { name = m.Key, data = m.Value });
-                return Json(allData, JsonRequestBehavior.AllowGet);
-            }else
-            {
-                if (employee == null)
-                {
-                    //var list = LineService.GetTransactionsByDeptID(Id, Source).Select(m => new { name = m.Key, data = m.Value });
-                    //return Json(list, JsonRequestBehavior.AllowGet);
-                    var categories = LineService.GetCategories(Id).GroupBy(m => m.Category).Select(l => new { name = l.Key, data = l.Select(g => g.Amount).ToList()});
-                    return Json(categories, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    var employeeData = LineService.GetEmployeeTransactions(Id, employee).Select(m => new { name = m.Key, data = m.Value });
-                    return Json(employeeData, JsonRequestBehavior.AllowGet);
-                }
+            var allData = BarService.GetDataForBarAndLine(Year, Id, Source, Employee).GroupBy(g => g.Category).Select(m => new { name = m.Key, data = m.Select(l => l.Amount).ToList() });
+            return Json(allData, JsonRequestBehavior.AllowGet);
+
+            //if (Id == null)
+            //{
+            //    var allData = BarService.GetDataForBarAndLine(Id, Source, Employee).GroupBy(g => g.Category).Select(m => new { name = m.Key, data = m.Select(l => l.Amount).ToList()});
+            //    return Json(allData, JsonRequestBehavior.AllowGet);
+            //}else
+            //{
+            //    if (Employee == null)
+            //    {
+            //        //var list = LineService.GetTransactionsByDeptID(Id, Source).Select(m => new { name = m.Key, data = m.Value });
+            //        //return Json(list, JsonRequestBehavior.AllowGet);
+            //        var categories = BarService.GetDataForBarAndLine(Id, Source, Employee).GroupBy(m => m.Category).Select(l => new { name = l.Key, data = l.Select(g => g.Amount).ToList()});
+            //        return Json(categories, JsonRequestBehavior.AllowGet);
+            //    }
+            //    else
+            //    {
+            //        var employeeData = BarService.GetDataForBarAndLine(Id, Source, Employee).GroupBy(j => j.Category).Select(m => new { name = m.Key, data = m.Select(j => j.Amount).ToList()});
+            //        return Json(employeeData, JsonRequestBehavior.AllowGet);
+            //    }
                 
-            }
+            //}
             
         }
 
-        public JsonResult BarData(int? Id, string Source, int? employee, int? Year)
+        public JsonResult BarData(int? Year, int? Id, string Source, int? Employee)
         {
-            if (Id == null)
-            {
-                var allData = BarService.GetAllTransactions().Select(m => new { name = m.Key, data = m.Value });
-                return Json(allData, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                if (employee == null)
-                {
-                    //var list = BarService.GetTransactionsByDeptID(Id, Source).Select(m => new { name = m.Key, data = m.Value });
-                    //return Json(list, JsonRequestBehavior.AllowGet);
-                    var categories = LineService.GetCategories(Id).GroupBy(m => m.Category).Select(l => new { name = l.Key, data = l.Select(g => g.Amount).ToList() });
-                    return Json(categories, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    var employeeData = BarService.GetEmployeeTransactions(Id, employee).Select(m => new { name = m.Key, data = m.Value });
-                    return Json(employeeData, JsonRequestBehavior.AllowGet);
-                }
+            var allData = BarService.GetDataForBarAndLine(Year, Id, Source, Employee).GroupBy(m => m.Category).Select(m => new { name = m.Key, data = m.Select(j => j.Amount).ToList() });
+            return Json(allData, JsonRequestBehavior.AllowGet);
+
+            //if (Id == null)
+            //{
+            //    var allData = BarService.GetDataForBarAndLine(Id, Source, Employee).GroupBy(m => m.Category).Select(m => new { name = m.Key, data = m.Select(j => j.Amount).ToList()});
+            //    return Json(allData, JsonRequestBehavior.AllowGet);
+            //}
+            //else
+            //{
+            //    if (Employee == null)
+            //    {                  
+            //        var categories = BarService.GetDataForBarAndLine(Id, Source, Employee).GroupBy(m => m.Category).Select(l => new { name = l.Key, data = l.Select(g => g.Amount).ToList()});
+            //        return Json(categories, JsonRequestBehavior.AllowGet);
+            //    }
+            //    else
+            //    {
+            //        var employeeData = BarService.GetDataForBarAndLine(Id, Source, Employee).GroupBy(m => m.Category).Select(m => new { name = m.Key, data = m.Select(j => j.Amount).ToList()});
+            //        return Json(employeeData, JsonRequestBehavior.AllowGet);
+            //    }
                 
-            }
+            //}
         }
 
-        public JsonResult PieData(int? Id, string Source, int? employee, int? Year)
-        {
-            if (employee == null)
-            {
-                //var allData = PieService.GetAllTransactions();
-                //var test = new { name = "Clay Revenue", data = allData.Select(j => new { name = j.Key, y = j.Value.Single() } ) };
+        public JsonResult PieData(int? Year, int? Id, string Source, int? Employee)
+        {                                                    
+            var categories = PieService.GetCategoriesForPie(Year, Id, Source, Employee);
+            var test = new { name = "Clay Revenue", data = categories.Select(l => new { name = l.Category, y = l.Amount }) };
+            return Json(test, JsonRequestBehavior.AllowGet);
+
+            //if (Employee == null)
+            //{
+            //    //var allData = PieService.GetAllTransactions();
+            //    //var test = new { name = "Clay Revenue", data = allData.Select(j => new { name = j.Key, y = j.Value.Single() } ) };
                 
-                var categories = PieService.GetCategoriesForPie(Id, Source);
-                var test = new { name = "Clay Revenue", data = categories.Select(l => new { name = l.Category, y = l.Amount }) };
-                return Json(test, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                var employeeData = PieService.GetEmployeeTransactions(Id, employee);
-                var test = new { name = "Clay Revenue", data = employeeData.Select(j => new { name = j.Key, y = j.Value.Single() }) };
-                return Json(test, JsonRequestBehavior.AllowGet);
-            }
+            //    var categories = PieService.GetCategoriesForPie(Id, Source);
+            //    var test = new { name = "Clay Revenue", data = categories.Select(l => new { name = l.Category, y = l.Amount }) };
+            //    return Json(test, JsonRequestBehavior.AllowGet);
+            //}
+            //else
+            //{
+            //    var employeeData = PieService.GetEmployeeTransactions(Id, employee);
+            //    var test = new { name = "Clay Revenue", data = employeeData.Select(j => new { name = j.Key, y = j.Value.Single() }) };
+            //    return Json(test, JsonRequestBehavior.AllowGet);
+            //}
                 
         }
     }

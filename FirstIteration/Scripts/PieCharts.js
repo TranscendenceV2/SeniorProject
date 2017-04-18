@@ -5,6 +5,7 @@
         var fund = $('#ddlfundcategory option:selected').text().replace("\n", "").trim();
         //console.log("fund = " + fund);
         fund = fund.includes("--") ? undefined : fund;
+        year = year.includes("--") ? undefined : year;
         //if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/PieData',

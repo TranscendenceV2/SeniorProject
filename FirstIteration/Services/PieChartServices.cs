@@ -21,11 +21,11 @@ namespace FirstIteration.Services
             }
             return byFundSource;
         }
-        public IList<CategoryAmount> GetCategoriesForPie(int? id, string source)
+        public IList<CategoryAmount> GetCategoriesForPie(int? year, int? id, string source, int? staff)
         {
             using (var context = new transcendenceEntities())
             {
-                return context.getCategoryPercents(id, source);
+                return context.getCategoryPercents(year, id, source, staff);
             }
         }
 
