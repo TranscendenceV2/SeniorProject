@@ -59,6 +59,21 @@ namespace FirstIteration.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult UploadModal(string id)
+        {
+            ViewBag.UploadType = id;
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult UploadCsv()
+        {
+            HttpPostedFile file = System.Web.HttpContext.Current.Request.Files["CsvUpload"];
+            string targetTable = System.Web.HttpContext.Current.Request.Form["UploadType"];
+            return ImportService.Import(file, targetTable);
+        }
+
         public JsonResult StaffList(int Id, int? Year)
         {
             var staffList = StaffService.GetStaffList(Id);

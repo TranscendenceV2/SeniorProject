@@ -303,6 +303,7 @@
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\BarCharts.js" />
     <Content Include="Scripts\bootstrap-checkbox-radio-switch.js" />
+    <Content Include="Scripts\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\bootstrap-notify.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -340,6 +341,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\DropDownLists.js" />
+    <Content Include="Scripts\Upload.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -383,6 +385,7 @@
     <Content Include="Views\Chart\_Stats.cshtml" />
     <Content Include="Views\Chart\_FundingSourceDropDowns.cshtml" />
     <Content Include="Views\Chart\_EmployeeDropDowns.cshtml" />
+    <Content Include="Views\Chart\UploadModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
