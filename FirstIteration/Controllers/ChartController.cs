@@ -16,11 +16,12 @@ namespace FirstIteration.Controllers
     public class ChartController : Controller
     {
         //private static LineChartServices LineService = new LineChartServices();
-        private static StaffListServices StaffService = new StaffListServices();
-        private static FundingSourceServices FundService = new FundingSourceServices();
-        private static DropDownServices DropDownService = new DropDownServices();
-        private static BarAndLineServices BarService = new BarAndLineServices();
-        private static PieChartServices PieService = new PieChartServices();
+        private readonly StaffListServices StaffService = new StaffListServices();
+        private readonly FundingSourceServices FundService = new FundingSourceServices();
+        private readonly DropDownServices DropDownService = new DropDownServices();
+        private readonly BarAndLineServices BarService = new BarAndLineServices();
+        private readonly PieChartServices PieService = new PieChartServices();
+        private readonly ImportServices ImportService = new ImportServices();
 
         public ActionResult Dashboard()
         {

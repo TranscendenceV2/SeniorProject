@@ -250,6 +250,7 @@
     <Compile Include="Services\BarAndLineServices.cs" />
     <Compile Include="Services\DropDownServices.cs" />
     <Compile Include="Services\FundingSourceServices.cs" />
+    <Compile Include="Services\ImportServices.cs" />
     <Compile Include="Services\LineChartServices.cs" />
     <Compile Include="Services\PieChartServices.cs" />
     <Compile Include="Services\StaffListServices.cs" />
