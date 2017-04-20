@@ -5,6 +5,8 @@ using FirstIteration.Models;
 using System.Web;
 using System.Web.Mvc;
 
+
+// populates department and year dropdowns on page load.
 namespace FirstIteration.Services
 {
     public class DropDownServices
@@ -20,6 +22,7 @@ namespace FirstIteration.Services
             return new SelectList(allDepartments, "DeptID", "DeptName");
         }
 
+        // returns list of all years 
         public SelectList GetAllYears()
         {        
             using (var db = new transcendenceEntities())

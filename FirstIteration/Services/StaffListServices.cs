@@ -5,6 +5,7 @@ using System.Web;
 using FirstIteration.Models;
 using System.Web.Mvc;
 
+//This service is used to populate dropdownlist with staff names based upon selected Department
 namespace FirstIteration.Services
 {
     public class StaffListServices

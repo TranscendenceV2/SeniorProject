@@ -5,27 +5,17 @@
         var fund = $('#ddlfundcategory option:selected').text().replace("\n", "").trim();
         fund = fund.includes("--") ? undefined : fund;
         year = year.includes("--") ? undefined : year;
-        //if (dept != null && dept != "") {
+
             $.ajax({
                 url: '/Chart/BarData',
                 data: { id: dept, source: fund , year: year},
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
-                        //console.log(JSON.stringify(data));
                         drawColumn(data);
                     }
-                    //else {
-                        //alert('data is null');
-                    //}
                 }
             });
-
-        //} else {
-          //  alert('No Department Selected!');
-        //}
-
     });
 });
 
@@ -41,15 +31,10 @@ $(function () {
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
-                        //console.log(JSON.stringify(data));
                         drawColumn(data);
                     }
                 }
             });
-
-        //} else {
-            //alert('No Employee Selected!');
         }
 
     });

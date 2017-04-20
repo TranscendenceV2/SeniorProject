@@ -4,14 +4,14 @@
     <Key>
       <PropertyRef Name="DeptID" />
     </Key>
-    <Property Name="DeptID" Type="int" Nullable="false" />
-    <Property Name="DeptName" Type="char" MaxLength="50" Nullable="false" />
+    <Property Name="DeptID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeptName" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Funding_Sources">
     <Key>
       <PropertyRef Name="FundMasterID" />
     </Key>
-    <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="FundMasterID" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="FundCategory" Type="char" MaxLength="10" Nullable="false" />
     <Property Name="FundCodeName" Type="char" MaxLength="50" Nullable="false" />
   </EntityType>
@@ -21,16 +21,17 @@
     </Key>
     <Property Name="StaffID" Type="int" Nullable="false" />
     <Property Name="DeptID" Type="int" Nullable="false" />
-    <Property Name="StaffName" Type="char" MaxLength="35" Nullable="false" />
+    <Property Name="StaffName" Type="varchar" MaxLength="35" Nullable="false" />
   </EntityType>
   <EntityType Name="Transactions">
     <Key>
-      <PropertyRef Name="UniqueID" />
+      <PropertyRef Name="TransID" />
     </Key>
+    <Property Name="TransID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UniqueID" Type="int" Nullable="false" />
     <Property Name="DeptID" Type="int" Nullable="false" />
     <Property Name="StaffID" Type="int" Nullable="false" />
-    <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="FundMasterID" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="TransType" Type="char" MaxLength="10" Nullable="false" />
     <Property Name="TransDate" Type="date" Nullable="false" />
     <Property Name="TransTransfer" Type="decimal" Precision="6" Scale="2" Nullable="false" />

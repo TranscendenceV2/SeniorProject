@@ -5,15 +5,12 @@ $(function () {
         var fund = $('#ddlfundcategory option:selected').text().replace("\n", "").trim();
         fund = fund.includes("--") ? undefined : fund;
         year = year.includes("--") ? undefined : year;
-        //if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/LineData',
                 data: { id: dept, source: fund, year: year },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
-                        //console.log(JSON.stringify(data));
                         drawLine(data);
                     }
                     else {
@@ -21,11 +18,6 @@ $(function () {
                     }
                 }
             });
-                    
-        //} else {
-         //   alert('No Department Selected!');            
-        //}
-
     });
 });
 
@@ -41,18 +33,13 @@ $(function () {
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
-                        //console.log(JSON.stringify(data));
-                        drawLine(data);
+                        drawLine(data);                       
                     }
                     else {
                         alert('Employee has no transactions');
                     }
                 }
             });
-
-        //} else {
-           // alert('No Employee Selected!');
         }
 
     });

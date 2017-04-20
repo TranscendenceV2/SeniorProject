@@ -3,30 +3,18 @@
         var dept = $('#ddldepartment').val();
         var year = $('#ddlyear').val();
         var fund = $('#ddlfundcategory option:selected').text().replace("\n", "").trim();
-        //console.log("fund = " + fund);
         fund = fund.includes("--") ? undefined : fund;
         year = year.includes("--") ? undefined : year;
-        //if (dept != null && dept != "") {
             $.ajax({
                 url: '/Chart/PieData',
                 data: { id: dept, source: fund, year: year },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
-                        //console.log(JSON.stringify(data));
                         drawPie(data);
                     }
-                    //else {
-                        //alert('data is null');
-                    //}
                 }
             });
-
-        //} else {
-           // alert('No Department Selected!');
-        //}
-
     });
 });
 
@@ -42,21 +30,15 @@ $(function () {
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
-                        //console.log(JSON.stringify(data));
                         drawPie(data);
                     }                    
                 }
             });
-
-        //} else {
-            //alert('No Employee Selected!');
         } else if(dept != "" && empl == ""){
             alert("Please select an employee")
         } else {
             alert("Please select a department")
         }
-
     });
 });
 

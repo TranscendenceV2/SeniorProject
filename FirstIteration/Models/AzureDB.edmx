@@ -9,14 +9,14 @@
           <Key>
             <PropertyRef Name="DeptID" />
           </Key>
-          <Property Name="DeptID" Type="int" Nullable="false" />
-          <Property Name="DeptName" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="DeptID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeptName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Funding_Sources">
           <Key>
             <PropertyRef Name="FundMasterID" />
           </Key>
-          <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="FundMasterID" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="FundCategory" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="FundCodeName" Type="char" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -26,16 +26,17 @@
           </Key>
           <Property Name="StaffID" Type="int" Nullable="false" />
           <Property Name="DeptID" Type="int" Nullable="false" />
-          <Property Name="StaffName" Type="char" MaxLength="35" Nullable="false" />
+          <Property Name="StaffName" Type="varchar" MaxLength="35" Nullable="false" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
-            <PropertyRef Name="UniqueID" />
+            <PropertyRef Name="TransID" />
           </Key>
+          <Property Name="TransID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UniqueID" Type="int" Nullable="false" />
           <Property Name="DeptID" Type="int" Nullable="false" />
           <Property Name="StaffID" Type="int" Nullable="false" />
-          <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="FundMasterID" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="TransType" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="TransDate" Type="date" Nullable="false" />
           <Property Name="TransTransfer" Type="decimal" Precision="6" Scale="2" Nullable="false" />
@@ -157,7 +158,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
             <PropertyRef Name="DeptID" />
           </Key>
           <Property Name="DeptID" Type="Int32" Nullable="false" />
-          <Property Name="DeptName" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DeptName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Dept" FromRole="Departments" ToRole="Transactions" />
           <NavigationProperty Name="Staffs" Relationship="Self.FK_DeptID" FromRole="Departments" ToRole="Staff" />
         </EntityType>
@@ -165,7 +166,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           <Key>
             <PropertyRef Name="FundMasterID" />
           </Key>
-          <Property Name="FundMasterID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FundMasterID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FundCategory" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="FundCodeName" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_FundMasterID" FromRole="Funding_Sources" ToRole="Transactions" />
@@ -176,16 +177,16 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           </Key>
           <Property Name="StaffID" Type="Int32" Nullable="false" />
           <Property Name="DeptID" Type="Int32" Nullable="false" />
-          <Property Name="StaffName" Type="String" MaxLength="35" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="StaffName" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Department" Relationship="Self.FK_DeptID" FromRole="Staff" ToRole="Departments" />
           <NavigationProperty Name="Transactions" Relationship="transcendenceModel.FK_Staff" FromRole="Staff" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
-            <PropertyRef Name="UniqueID" />
+            <PropertyRef Name="TransID" />
           </Key>
           <Property Name="DeptID" Type="Int32" Nullable="false" />
-          <Property Name="FundMasterID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FundMasterID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TransType" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="TransDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="TransTransfer" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
@@ -198,6 +199,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           <Property Name="UniqueID" Type="Int32" Nullable="false" />
           <Property Name="StaffID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Staff" Relationship="transcendenceModel.FK_Staff" FromRole="Transaction" ToRole="Staff" />
+          <Property Name="TransID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="database_firewall_rules">
           <Key>
@@ -327,6 +329,7 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="transcendenceModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="TransID" ColumnName="TransID" />
                 <ScalarProperty Name="StaffID" ColumnName="StaffID" />
                 <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
                 <ScalarProperty Name="DeptID" ColumnName="DeptID" />

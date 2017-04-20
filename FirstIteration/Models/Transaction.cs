@@ -25,6 +25,7 @@ namespace FirstIteration.Models
         public Nullable<decimal> TransAmount { get; set; }
         public int UniqueID { get; set; }
         public int StaffID { get; set; }
+        public int TransID { get; set; }
     
         public virtual Department Department { get; set; }
         public virtual Funding_Sources Funding_Sources { get; set; }
