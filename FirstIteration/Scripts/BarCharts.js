@@ -22,7 +22,6 @@
                 success: function (data) {
                     if (data != null && data != "") {
                         drawColumn(data);
-                        alert(JSON.stringify(data));
                     }
                 }
             });
