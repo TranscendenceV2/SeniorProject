@@ -10,11 +10,18 @@ namespace FirstIteration.Services
 {
     public class BarAndLineServices
     {
-        public IList<CategoryAmount> GetDataForBarAndLine(int? year, int? id, string source, int? staff)
+        public IList<CategoryAmount> GetDataForLine(int? year, int? id, string source, int? staff)
         {
             using (var context = new transcendenceEntities())
             {
-                return context.getCategoryAmounts(year, id, source, staff);
+                return context.getCategoryAmountsForLine(year, id, source, staff);
+            }
+        }
+        public IList<CategoryAmount> GetDataForBar(int? year, int? id, string source, int? staff)
+        {
+            using (var context = new transcendenceEntities())
+            {
+                return context.getCategoryAmountsForBar(year, id, source, staff);
             }
         }
     }

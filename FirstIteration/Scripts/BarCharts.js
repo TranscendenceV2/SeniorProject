@@ -1,18 +1,28 @@
 ﻿$(function () {
     $('#generate').click(function () {
+        var X;
         var dept = $('#ddldepartment').val();
         var year = $('#ddlyear').val();
         var fund = $('#ddlfundcategory option:selected').text().replace("\n", "").trim();
         fund = fund.includes("--") ? undefined : fund;
         year = year.includes("--") ? undefined : year;
 
+        if ($('#ddldepartment option:selected').text().replace("\n", "").trim().includes("--")) {
+            X = undefined;
+        }else if (dept != null && typeof fund === 'undefined') {
+            X = $('#ddldepartment option:selected').text().replace("\n", "").trim() + " Revenue by Month";
+        }else if (typeof fund !== 'undefined') {
+            X = $('#ddldepartment option:selected').text().replace("\n", "").trim() + " " + $('#ddlfundcategory option:selected').text().replace("\n", "").trim() + " Revenue by Month";
+        }
+
             $.ajax({
                 url: '/Chart/BarData',
-                data: { id: dept, source: fund , year: year},
+                data: { id: dept, source: fund , year: year, X: X},
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
                         drawColumn(data);
+                        alert(JSON.stringify(data));
                     }
                 }
             });
@@ -46,7 +56,7 @@ function drawColumn(jsonData) {
             type: 'column'
         },
         title: {
-            text: 'Monthly Revenue by Funding Source'
+            text: 'Monthly Revenue'
         },
         subtitle: {
             text: 'Clay Behavioral Health'

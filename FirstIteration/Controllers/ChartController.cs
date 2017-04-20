@@ -107,13 +107,14 @@ namespace FirstIteration.Controllers
         //based upon the information provided by user from dropdownlists
         public JsonResult LineData(int? Year, int? Id, string Source, int? Employee)
         {
-            var allData = BarService.GetDataForBarAndLine(Year, Id, Source, Employee).GroupBy(g => g.Category).Select(m => new { name = m.Key, data = m.Select(l => l.Amount).ToList() });
+            var allData = BarService.GetDataForLine(Year, Id, Source, Employee).GroupBy(g => g.Category).Select(m => new { name = m.Key, data = m.Select(l => l.Amount).ToList() });
             return Json(allData, JsonRequestBehavior.AllowGet);           
         }
 
-        public JsonResult BarData(int? Year, int? Id, string Source, int? Employee)
+        public JsonResult BarData(int? Year, int? Id, string Source, int? Employee, string X)
         {
-            var allData = BarService.GetDataForBarAndLine(Year, Id, Source, Employee).GroupBy(m => m.Category).Select(m => new { name = m.Key, data = m.Select(j => j.Amount).ToList() });
+            X = X ?? "All Revenue by Month";
+            var allData = BarService.GetDataForBar(Year, Id, Source, Employee).GroupBy(m => m.Category).Select(m => new { name = X, data = m.Select(j => j.Amount).ToList() });
             return Json(allData, JsonRequestBehavior.AllowGet);
         }
 

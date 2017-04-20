@@ -10,7 +10,7 @@ namespace FirstIteration.Models
 {
     public partial class transcendenceEntities : DbContext
     {
-        public IList<CategoryAmount> getCategoryAmounts(int? year, int? deptid, string source, int? staff)
+        public IList<CategoryAmount> getCategoryAmountsForLine(int? year, int? deptid, string source, int? staff)
         {
             year = year ?? this.Transactions.Max(m => m.TransDate.Year);
             var parameters = new[]
@@ -47,6 +47,24 @@ namespace FirstIteration.Models
             return categoryAmounts;
 
 
+        }
+
+        public IList<CategoryAmount> getCategoryAmountsForBar(int? year, int? deptid, string source, int? staff)
+        {
+            year = year ?? this.Transactions.Max(m => m.TransDate.Year);
+            var parameters = new[]
+            {
+                new SqlParameter("@year", year),
+                new SqlParameter("@deptid", deptid ?? (object)DBNull.Value),
+                new SqlParameter("@fundcategory", source ?? (object)DBNull.Value),
+                new SqlParameter("@staffid", staff ?? (object)DBNull.Value)
+            };
+
+            IList<CategoryAmount> categoryAmounts = this.Database.SqlQuery<CategoryAmount>
+                ("dbo.GetTransCategoriesByTotal @year, @deptid, @fundcategory, @staffid",
+                parameters).ToList();
+
+            return categoryAmounts;
         }
 
 
