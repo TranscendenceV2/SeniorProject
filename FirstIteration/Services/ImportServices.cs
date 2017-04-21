@@ -30,6 +30,7 @@ namespace FirstIteration.Services
             if (file.ContentLength > 0 && Path.GetExtension(file.FileName).ToUpper().Contains("CSV"))
             {
                 string report = "";
+                MemoryStream ms = new MemoryStream();
                 try
                 {
                     switch (targetTable)
@@ -41,7 +42,13 @@ namespace FirstIteration.Services
                             report = ProcessDepartments(file.InputStream);
                             break;
                         case "Staff":
-                            report = ProcessStaff(file.InputStream);
+                            file.InputStream.CopyTo(ms);
+                            file.InputStream.Position = 0;
+                            ms.Position = 0;
+                            report = string.Format("Unique Staff: {0}, Staff assigned to dept: {1}", ProcessStaff(file.InputStream), ProcessStaffBridge(ms));
+                            break;
+                        case "Funding_Sources":
+                            report = ProcessFundingSources(file.InputStream);
                             break;
                     }
                 }
@@ -77,24 +84,37 @@ namespace FirstIteration.Services
             return new HttpStatusCodeResult(400, "File not found or incorrect file format.");
         }
 
+        private string ProcessFundingSources(Stream inputStream)
+        {
+            string rowsCopied;
+            Dictionary<string, KeyValuePair<string, Type>> columnMaps = new Dictionary<string, KeyValuePair<string, Type>> { { "psplanmasterid_c", new KeyValuePair<string, Type>("FundMasterID", typeof(string)) },
+            { "pstype_c", new KeyValuePair<string, Type>("FundCategory", typeof(string)) }, { "pscodename_vc", new KeyValuePair<string, Type>("FundCodeName", typeof(string)) }};
+
+            rowsCopied = Process(inputStream, "Funding_Sources", columnMaps.Values.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), (csvreader, dataTable) =>
+            {
+                var row = dataTable.NewRow();
+                foreach (KeyValuePair<string, KeyValuePair<string, Type>> item in columnMaps)
+                {
+                    row[item.Value.Key] = Cast(csvreader.GetField(item.Key), item.Value.Value);
+                }
+                dataTable.Rows.Add(row);
+            });
+
+            return rowsCopied;
+        }
+
         private string ProcessTransactions(Stream inputStream)
         {
             string rowsCopied;
-            Dictionary<string, string> fundingSources;
 
             //Mapping columns programmatically (need database tables to match csv columns)
             //Dictionary<string, Type> columns = PropertiesToDictionary(typeof(Transaction), p => !p.GetGetMethod().IsVirtual && p.Name != "TransAmount");
 
             //Map csv columns to sql table columns and data types (done manually for now)
             Dictionary<string, KeyValuePair<string, Type>> columnMaps = new Dictionary<string, KeyValuePair<string, Type>> { { "uniqueid_c", new KeyValuePair<string, Type>("UniqueID", typeof(int)) },
-            { "DeptName", new KeyValuePair<string, Type>("DeptID", typeof(int)) }, { "staffcode_c", new KeyValuePair<string, Type>("StaffID", typeof(int)) }, { "pscodename_vc", new KeyValuePair<string, Type>("FundMasterID", typeof(string)) },
+            { "DeptName", new KeyValuePair<string, Type>("DeptID", typeof(int)) }, { "staffcode_c", new KeyValuePair<string, Type>("StaffID", typeof(int)) }, { "psplanmasterid_c", new KeyValuePair<string, Type>("FundMasterID", typeof(string)) },
             { "transactioncode_c", new KeyValuePair<string, Type>("TransType", typeof(string)) }, { "transactiondate_d", new KeyValuePair<string, Type>("TransDate", typeof(DateTime)) }, { "tranfer", new KeyValuePair<string, Type>("TransTransfer", typeof(decimal)) },
             { "adj", new KeyValuePair<string, Type>("TransAdjustment", typeof(decimal)) }, { "credit", new KeyValuePair<string, Type>("TransCredit", typeof(decimal)) }, { "charge", new KeyValuePair<string, Type>("TransCharge", typeof(decimal)) }};
-
-            using (var context = new transcendenceEntities())
-            {
-                fundingSources = context.Funding_Sources.ToDictionary(f => f.FundCodeName.Replace("\r\n", "").Trim(), f => f.FundMasterID);
-            }
 
             rowsCopied = Process(inputStream, "Transactions", columnMaps.Values.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), (csvreader, dataTable) =>
             {
@@ -107,8 +127,6 @@ namespace FirstIteration.Services
                 {
                     if (item.Value.Key == "DeptID")
                         row[item.Value.Key] = _departments[csvreader.GetField(item.Key)];
-                    else if (item.Value.Key == "FundMasterID")
-                        row[item.Value.Key] = fundingSources[csvreader.GetField(item.Key)];
                     else
                     {
                         var field = Cast(csvreader.GetField(item.Key), item.Value.Value);
@@ -166,23 +184,68 @@ namespace FirstIteration.Services
         private string ProcessStaff(Stream inputStream)
         {
             string rowsCopied;
+            List<int> staffIDs;
 
             Dictionary<string, KeyValuePair<string, Type>> columnMaps = new Dictionary<string, KeyValuePair<string, Type>> { { "staffcode_c", new KeyValuePair<string, Type>("StaffID", typeof(int)) },
-            { "DeptName", new KeyValuePair<string, Type>("DeptID", typeof(int)) }, { "StaffName", new KeyValuePair<string, Type>("StaffName", typeof(string)) } };
+            { "StaffName", new KeyValuePair<string, Type>("StaffName", typeof(string)) } };
+
+            using (var context = new transcendenceEntities())
+                staffIDs = context.Staffs.Select(s => s.StaffID).ToList();
 
             rowsCopied = Process(inputStream, "Staff", columnMaps.Values.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), (csvreader, dataTable) =>
             {
+                int staffID = Cast(csvreader.GetField("staffcode_c"), typeof(int));
+
+                if (!staffIDs.Contains(staffID))
+                {
+                    var row = dataTable.NewRow();
+                    foreach (KeyValuePair<string, KeyValuePair<string, Type>> item in columnMaps)
+                    {
+                        if (item.Value.Key == "StaffID")
+                        {
+                            row[item.Value.Key] = staffID;
+                            staffIDs.Add(staffID);
+                        }
+                        else
+                            row[item.Value.Key] = Cast(csvreader.GetField(item.Key), item.Value.Value);
+                    }
+                    dataTable.Rows.Add(row);
+                }
+            });
+
+            return rowsCopied;
+        }
+
+        private string ProcessStaffBridge(Stream inputStream)
+        {
+            string rowsCopied;
+            Dictionary<string, KeyValuePair<string, Type>> columnMaps = new Dictionary<string, KeyValuePair<string, Type>> { { "staffcode_c", new KeyValuePair<string, Type>("StaffID", typeof(int)) },
+            { "DeptName", new KeyValuePair<string, Type>("DeptID", typeof(int)) } };
+
+            rowsCopied = Process(inputStream, "StaffDept", columnMaps.Values.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), (csvreader, dataTable) =>
+            {
                 var row = dataTable.NewRow();
+                string deptName;
+                int staffID = 0, deptID = 0;
 
                 foreach (KeyValuePair<string, KeyValuePair<string, Type>> item in columnMaps)
                 {
                     if (item.Value.Key == "DeptID")
-                        row[item.Value.Key] = _departments[csvreader.GetField(item.Key)];
+                    {
+                        deptName = csvreader.GetField(item.Key);
+                        deptID = _departments[deptName];
+                        row[item.Value.Key] = deptID;
+                    }
                     else
-                        row[item.Value.Key] = Cast(csvreader.GetField(item.Key), item.Value.Value);
+                    {
+                        staffID = Cast(csvreader.GetField(item.Key), item.Value.Value);
+                        row[item.Value.Key] = staffID;
+                    }
                 }
 
-                dataTable.Rows.Add(row);
+                using (var context = new transcendenceEntities())
+                    if (context.StaffDepts.Where(sd => sd.DeptID == deptID && sd.StaffID == staffID).FirstOrDefault() == null)
+                        dataTable.Rows.Add(row);
             });
 
             return rowsCopied;

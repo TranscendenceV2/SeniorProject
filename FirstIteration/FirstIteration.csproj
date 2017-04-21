@@ -213,9 +213,39 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AzureDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AzureDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AzureDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AzureDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AzureDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AzureDB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\DbContextExtend.cs" />
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>AzureDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Funding_Sources.cs">
+      <DependentUpon>AzureDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Staff.cs">
+      <DependentUpon>AzureDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StaffDept.cs">
+      <DependentUpon>AzureDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Transaction.cs">
+      <DependentUpon>AzureDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BarAndLineServices.cs" />
     <Compile Include="Services\DropDownServices.cs" />
@@ -258,6 +288,16 @@
     <Content Include="img\sidebar-5.jpg" />
     <Content Include="img\sidebar-6.jpg" />
     <Content Include="img\tim_80x80.png" />
+    <Content Include="Models\AzureDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AzureDB.edmx</DependentUpon>
+      <LastGenOutput>AzureDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\AzureDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AzureDB.edmx</DependentUpon>
+      <LastGenOutput>AzureDB.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\BarCharts.js" />
@@ -273,6 +313,13 @@
     <Content Include="fonts\Pe-icon-7-stroke.eot" />
     <Content Include="fonts\Pe-icon-7-stroke.ttf" />
     <Content Include="fonts\Pe-icon-7-stroke.woff" />
+    <EntityDeploy Include="Models\AzureDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AzureDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\AzureDB.edmx.diagram">
+      <DependentUpon>AzureDB.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\chartist.min.js" />
     <Content Include="Scripts\demo.js" />
