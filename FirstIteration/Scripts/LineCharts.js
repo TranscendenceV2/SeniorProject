@@ -1,16 +1,16 @@
 $(function () {
     $('#generate').on('click', function () {
         var dept = $('#ddldepartment').val();
-        var fund = $('#ddlfundcategory option:selected').text();
-        //if (dept != null && dept != "") {
+        var year = $('#ddlyear').val();
+        var fund = $('#ddlfundcategory option:selected').text().replace("\n", "").trim();
+        fund = fund.includes("--") ? undefined : fund;
+        year = year.includes("--") ? undefined : year;
             $.ajax({
                 url: '/Chart/LineData',
-                data: { id: dept, source: fund },
+                data: { id: dept, source: fund, year: year },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
-                        //console.log(JSON.stringify(data));
                         drawLine(data);
                     }
                     else {
@@ -18,37 +18,28 @@ $(function () {
                     }
                 }
             });
-                    
-        //} else {
-         //   alert('No Department Selected!');            
-        //}
-
     });
 });
 
 $(function () {
     $('#employee').on('click', function () {
         var dept = $('#ddldepartment').val();
+        var year = $('#ddlyear').val();
         var empl = $('#ddlstaff').val();
         if (empl != null && empl != "") {
             $.ajax({
                 url: '/Chart/LineData',
-                data: { id: dept, employee: empl },
+                data: { id: dept, employee: empl, year: year },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
-                        //console.log(JSON.stringify(data));
-                        drawLine(data);
+                        drawLine(data);                       
                     }
                     else {
                         alert('Employee has no transactions');
                     }
                 }
             });
-
-        //} else {
-           // alert('No Employee Selected!');
         }
 
     });
@@ -57,6 +48,11 @@ $(function () {
 function drawLine(jsonData) {
     Highcharts.chart('chart_div', {
 
+        chart: {
+            zoomType: 'x',
+            panning: true,
+            panKey: 'shift'
+        },
         data: {
             d: jsonData
         },
@@ -68,12 +64,16 @@ function drawLine(jsonData) {
             text: 'Clay Behavioral Health'
         },
         xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            minRange: 3
         },
         yAxis: {
             title: {
                 text: 'Revenue ($)'
             }
+        },
+        credits: {
+            text: 'Transcendence 2017'
         },
         plotOptions: {
             line: {

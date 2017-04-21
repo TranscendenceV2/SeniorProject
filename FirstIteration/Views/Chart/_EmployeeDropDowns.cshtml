@@ -18,6 +18,10 @@
                 <option value="">--Select Staff Member--</option>
             </select>
         </li>
+        <li style="padding: 10px 15px;">
+            <label for="sel1">Year:</label>
+            @Html.DropDownListFor(m => m.Departments, (IEnumerable<SelectListItem>)ViewBag.Year, "--Select Year--", new { @class = "form-control", id = "ddlyear" })
+        </li>
         <li class="active" style="padding: 10px 15px;">
             <button type="button" class="form-control" id="employee">Submit</button>
         </li>

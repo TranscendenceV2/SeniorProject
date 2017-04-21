@@ -14,7 +14,10 @@ namespace FirstIteration.Models
     
     public partial class Transaction
     {
+        public int TransID { get; set; }
+        public int UniqueID { get; set; }
         public int DeptID { get; set; }
+        public int StaffID { get; set; }
         public string FundMasterID { get; set; }
         public string TransType { get; set; }
         public System.DateTime TransDate { get; set; }
@@ -23,8 +26,6 @@ namespace FirstIteration.Models
         public decimal TransCredit { get; set; }
         public decimal TransCharge { get; set; }
         public Nullable<decimal> TransAmount { get; set; }
-        public int UniqueID { get; set; }
-        public int StaffID { get; set; }
     
         public virtual Department Department { get; set; }
         public virtual Funding_Sources Funding_Sources { get; set; }

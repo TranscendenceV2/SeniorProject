@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using FirstIteration.Models;
 
+// populates drop down list categories that are related to funding source
+// this is based upon selected department
 namespace FirstIteration.Services
 {
     public class FundingSourceServices
     {
-        /* returns all funding sources that match dept ID */
+        /* returns all funding categories that match dept ID */
         public List<FundingCategoryObject> GetFundingCategoryList(int id)
         {
 
@@ -24,6 +26,7 @@ namespace FirstIteration.Services
 
         }
 
+        /* returns all fund code names that match funding categories*/
         public List<FundingCategoryObject> GetFundCodeNameList(int id, string text)
         {
             string compare = string.Concat(text.Take(3));

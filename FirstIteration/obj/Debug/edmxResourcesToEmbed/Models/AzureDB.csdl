@@ -4,16 +4,16 @@
     <Key>
       <PropertyRef Name="DeptID" />
     </Key>
-    <Property Name="DeptID" Type="Int32" Nullable="false" />
-    <Property Name="DeptName" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="DeptID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DeptName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Transactions" Relationship="Self.FK_Dept" FromRole="Departments" ToRole="Transactions" />
-    <NavigationProperty Name="Staffs" Relationship="Self.FK_DeptID" FromRole="Departments" ToRole="Staff" />
+    <NavigationProperty Name="StaffDepts" Relationship="Self.FK_DeptID_Bridge" FromRole="Departments" ToRole="StaffDept" />
   </EntityType>
   <EntityType Name="Funding_Sources">
     <Key>
       <PropertyRef Name="FundMasterID" />
     </Key>
-    <Property Name="FundMasterID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="FundMasterID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="FundCategory" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="FundCodeName" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Transactions" Relationship="Self.FK_FundMasterID" FromRole="Funding_Sources" ToRole="Transactions" />
@@ -23,17 +23,29 @@
       <PropertyRef Name="StaffID" />
     </Key>
     <Property Name="StaffID" Type="Int32" Nullable="false" />
+    <Property Name="StaffName" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK_Staff" FromRole="Staff" ToRole="Transactions" />
+    <NavigationProperty Name="StaffDepts" Relationship="Self.FK_StaffID_Bridge" FromRole="Staff" ToRole="StaffDept" />
+  </EntityType>
+  <EntityType Name="StaffDept">
+    <Key>
+      <PropertyRef Name="StaffDeptID" />
+    </Key>
+    <Property Name="StaffDeptID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StaffID" Type="Int32" Nullable="false" />
     <Property Name="DeptID" Type="Int32" Nullable="false" />
-    <Property Name="StaffName" Type="String" MaxLength="35" FixedLength="true" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Department" Relationship="Self.FK_DeptID" FromRole="Staff" ToRole="Departments" />
-    <NavigationProperty Name="Transactions" Relationship="transcendenceModel.FK_Staff" FromRole="Staff" ToRole="Transaction" />
+    <NavigationProperty Name="Department" Relationship="Self.FK_DeptID_Bridge" FromRole="StaffDept" ToRole="Departments" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK_StaffID_Bridge" FromRole="StaffDept" ToRole="Staff" />
   </EntityType>
   <EntityType Name="Transaction">
     <Key>
-      <PropertyRef Name="UniqueID" />
+      <PropertyRef Name="TransID" />
     </Key>
+    <Property Name="TransID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UniqueID" Type="Int32" Nullable="false" />
     <Property Name="DeptID" Type="Int32" Nullable="false" />
-    <Property Name="FundMasterID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="StaffID" Type="Int32" Nullable="false" />
+    <Property Name="FundMasterID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="TransType" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="TransDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="TransTransfer" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
@@ -43,25 +55,7 @@
     <Property Name="TransAmount" Type="Decimal" Precision="9" Scale="2" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="Department" Relationship="Self.FK_Dept" FromRole="Transactions" ToRole="Departments" />
     <NavigationProperty Name="Funding_Sources" Relationship="Self.FK_FundMasterID" FromRole="Transactions" ToRole="Funding_Sources" />
-    <Property Name="UniqueID" Type="Int32" Nullable="false" />
-    <Property Name="StaffID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Staff" Relationship="transcendenceModel.FK_Staff" FromRole="Transaction" ToRole="Staff" />
-  </EntityType>
-  <EntityType Name="database_firewall_rules">
-    <Key>
-      <PropertyRef Name="id" />
-      <PropertyRef Name="name" />
-      <PropertyRef Name="start_ip_address" />
-      <PropertyRef Name="end_ip_address" />
-      <PropertyRef Name="create_date" />
-      <PropertyRef Name="modify_date" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK_Staff" FromRole="Transactions" ToRole="Staff" />
   </EntityType>
   <Association Name="FK_Dept">
     <End Role="Departments" Type="Self.Department" Multiplicity="1">
@@ -77,16 +71,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_DeptID">
-    <End Role="Departments" Type="Self.Department" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+  <Association Name="FK_DeptID_Bridge">
+    <End Role="Departments" Type="Self.Department" Multiplicity="1" />
+    <End Role="StaffDept" Type="Self.StaffDept" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Departments">
         <PropertyRef Name="DeptID" />
       </Principal>
-      <Dependent Role="Staff">
+      <Dependent Role="StaffDept">
         <PropertyRef Name="DeptID" />
       </Dependent>
     </ReferentialConstraint>
@@ -105,39 +97,55 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Staff">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffID" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="StaffID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffID_Bridge">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+    <End Role="StaffDept" Type="Self.StaffDept" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffID" />
+      </Principal>
+      <Dependent Role="StaffDept">
+        <PropertyRef Name="StaffID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="transcendenceEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Departments" EntityType="Self.Department" />
     <EntitySet Name="Funding_Sources" EntityType="Self.Funding_Sources" />
     <EntitySet Name="Staffs" EntityType="Self.Staff" />
+    <EntitySet Name="StaffDepts" EntityType="Self.StaffDept" />
     <EntitySet Name="Transactions" EntityType="Self.Transaction" />
-    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
     <AssociationSet Name="FK_Dept" Association="Self.FK_Dept">
       <End Role="Departments" EntitySet="Departments" />
       <End Role="Transactions" EntitySet="Transactions" />
     </AssociationSet>
-    <AssociationSet Name="FK_DeptID" Association="Self.FK_DeptID">
+    <AssociationSet Name="FK_DeptID_Bridge" Association="Self.FK_DeptID_Bridge">
       <End Role="Departments" EntitySet="Departments" />
-      <End Role="Staff" EntitySet="Staffs" />
+      <End Role="StaffDept" EntitySet="StaffDepts" />
     </AssociationSet>
     <AssociationSet Name="FK_FundMasterID" Association="Self.FK_FundMasterID">
       <End Role="Funding_Sources" EntitySet="Funding_Sources" />
       <End Role="Transactions" EntitySet="Transactions" />
     </AssociationSet>
-    <AssociationSet Name="FK_Staff" Association="transcendenceModel.FK_Staff">
+    <AssociationSet Name="FK_Staff" Association="Self.FK_Staff">
       <End Role="Staff" EntitySet="Staffs" />
-      <End Role="Transaction" EntitySet="Transactions" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffID_Bridge" Association="Self.FK_StaffID_Bridge">
+      <End Role="Staff" EntitySet="Staffs" />
+      <End Role="StaffDept" EntitySet="StaffDepts" />
     </AssociationSet>
   </EntityContainer>
-  <Association Name="FK_Staff">
-    <End Type="transcendenceModel.Staff" Role="Staff" Multiplicity="1" />
-    <End Type="transcendenceModel.Transaction" Role="Transaction" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Staff">
-        <PropertyRef Name="StaffID" />
-      </Principal>
-      <Dependent Role="Transaction">
-        <PropertyRef Name="StaffID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

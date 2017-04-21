@@ -4,14 +4,14 @@
     <Key>
       <PropertyRef Name="DeptID" />
     </Key>
-    <Property Name="DeptID" Type="int" Nullable="false" />
-    <Property Name="DeptName" Type="char" MaxLength="50" Nullable="false" />
+    <Property Name="DeptID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeptName" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Funding_Sources">
     <Key>
       <PropertyRef Name="FundMasterID" />
     </Key>
-    <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="FundMasterID" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="FundCategory" Type="char" MaxLength="10" Nullable="false" />
     <Property Name="FundCodeName" Type="char" MaxLength="50" Nullable="false" />
   </EntityType>
@@ -20,17 +20,25 @@
       <PropertyRef Name="StaffID" />
     </Key>
     <Property Name="StaffID" Type="int" Nullable="false" />
+    <Property Name="StaffName" Type="varchar" MaxLength="35" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StaffDept">
+    <Key>
+      <PropertyRef Name="StaffDeptID" />
+    </Key>
+    <Property Name="StaffDeptID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StaffID" Type="int" Nullable="false" />
     <Property Name="DeptID" Type="int" Nullable="false" />
-    <Property Name="StaffName" Type="char" MaxLength="35" Nullable="false" />
   </EntityType>
   <EntityType Name="Transactions">
     <Key>
-      <PropertyRef Name="UniqueID" />
+      <PropertyRef Name="TransID" />
     </Key>
+    <Property Name="TransID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UniqueID" Type="int" Nullable="false" />
     <Property Name="DeptID" Type="int" Nullable="false" />
     <Property Name="StaffID" Type="int" Nullable="false" />
-    <Property Name="FundMasterID" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="FundMasterID" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="TransType" Type="char" MaxLength="10" Nullable="false" />
     <Property Name="TransDate" Type="date" Nullable="false" />
     <Property Name="TransTransfer" Type="decimal" Precision="6" Scale="2" Nullable="false" />
@@ -38,24 +46,6 @@
     <Property Name="TransCredit" Type="decimal" Precision="6" Scale="2" Nullable="false" />
     <Property Name="TransCharge" Type="decimal" Precision="6" Scale="2" Nullable="false" />
     <Property Name="TransAmount" Type="decimal" Precision="9" Scale="2" StoreGeneratedPattern="Computed" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="database_firewall_rules">
-    <Key>
-      <PropertyRef Name="id" />
-      <PropertyRef Name="name" />
-      <PropertyRef Name="start_ip_address" />
-      <PropertyRef Name="end_ip_address" />
-      <PropertyRef Name="create_date" />
-      <PropertyRef Name="modify_date" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
-    <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
-    <Property Name="create_date" Type="datetime" Nullable="false" />
-    <Property Name="modify_date" Type="datetime" Nullable="false" />
   </EntityType>
   <Association Name="FK_Dept">
     <End Role="Departments" Type="Self.Departments" Multiplicity="1">
@@ -71,16 +61,14 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_DeptID">
-    <End Role="Departments" Type="Self.Departments" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+  <Association Name="FK_DeptID_Bridge">
+    <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+    <End Role="StaffDept" Type="Self.StaffDept" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Departments">
         <PropertyRef Name="DeptID" />
       </Principal>
-      <Dependent Role="Staff">
+      <Dependent Role="StaffDept">
         <PropertyRef Name="DeptID" />
       </Dependent>
     </ReferentialConstraint>
@@ -111,28 +99,31 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_StaffID_Bridge">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+    <End Role="StaffDept" Type="Self.StaffDept" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffID" />
+      </Principal>
+      <Dependent Role="StaffDept">
+        <PropertyRef Name="StaffID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="transcendenceModelStoreContainer">
     <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Funding_Sources" EntityType="Self.Funding_Sources" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StaffDept" EntityType="Self.StaffDept" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
-      <DefiningQuery>SELECT 
-    [database_firewall_rules].[id] AS [id], 
-    [database_firewall_rules].[name] AS [name], 
-    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
-    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
-    [database_firewall_rules].[create_date] AS [create_date], 
-    [database_firewall_rules].[modify_date] AS [modify_date]
-    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_Dept" Association="Self.FK_Dept">
       <End Role="Departments" EntitySet="Departments" />
       <End Role="Transactions" EntitySet="Transactions" />
     </AssociationSet>
-    <AssociationSet Name="FK_DeptID" Association="Self.FK_DeptID">
+    <AssociationSet Name="FK_DeptID_Bridge" Association="Self.FK_DeptID_Bridge">
       <End Role="Departments" EntitySet="Departments" />
-      <End Role="Staff" EntitySet="Staff" />
+      <End Role="StaffDept" EntitySet="StaffDept" />
     </AssociationSet>
     <AssociationSet Name="FK_FundMasterID" Association="Self.FK_FundMasterID">
       <End Role="Funding_Sources" EntitySet="Funding_Sources" />
@@ -141,6 +132,10 @@ warning 6002: The table/view 'transcendence.sys.database_firewall_rules' does no
     <AssociationSet Name="FK_Staff" Association="Self.FK_Staff">
       <End Role="Staff" EntitySet="Staff" />
       <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffID_Bridge" Association="Self.FK_StaffID_Bridge">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="StaffDept" EntitySet="StaffDept" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

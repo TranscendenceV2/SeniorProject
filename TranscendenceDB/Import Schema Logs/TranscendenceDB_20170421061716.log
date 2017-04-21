@@ -1,0 +1,10 @@
+4/21/2017 2:17:16 AM	This log contains information about the import schema operation into project 'TranscendenceDB' on computer 'BRIAN-PC' by user 'Brian'.
+4/21/2017 2:17:16 AM	Deserializing model
+4/21/2017 2:17:16 AM	Resolving model
+4/21/2017 2:17:16 AM	Visiting imported model for types
+4/21/2017 2:17:16 AM	Scanning project for duplicate elements
+4/21/2017 2:17:16 AM	Finished duplicate element processing
+4/21/2017 2:17:16 AM	Processing extra files
+4/21/2017 2:17:16 AM	Finished importing Data-tier Application file.
+4/21/2017 2:17:16 AM	A summary of the import was saved to the following location: C:\Users\Brian\Documents\Visual Studio 2015\Github\Source\Repos\SeniorProject\TranscendenceDB\Import Schema Logs\TranscendenceDB_20170421061716.log
+4/21/2017 2:17:16 AM	Click Finish to continue...

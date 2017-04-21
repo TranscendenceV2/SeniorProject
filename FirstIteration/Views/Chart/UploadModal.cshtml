@@ -1,0 +1,19 @@
+﻿<div class="modal fade" id="upload-modal" role="dialog">
+    <div class="modal-dialog">
+        <div id="modal-content" class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Upload @ViewBag.UploadType</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <input id="file" type="file" name="csvfile" />
+                    <p id="help-block" class="help-block">Choose CSV file to upload</p>
+                    <button id="submit" type="button" class="btn btn-primary">Upload</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

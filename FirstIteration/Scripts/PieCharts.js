@@ -1,57 +1,44 @@
 ﻿$(function () {
     $('#generate').click(function () {
         var dept = $('#ddldepartment').val();
-        var fund = $('#ddlfundcategory option:selected').text();
-        //if (dept != null && dept != "") {
+        var year = $('#ddlyear').val();
+        var fund = $('#ddlfundcategory option:selected').text().replace("\n", "").trim();
+        fund = fund.includes("--") ? undefined : fund;
+        year = year.includes("--") ? undefined : year;
             $.ajax({
                 url: '/Chart/PieData',
-                data: { id: dept, source: fund },
+                data: { id: dept, source: fund, year: year },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
-                        //console.log(JSON.stringify(data));
                         drawPie(data);
                     }
-                    //else {
-                        //alert('data is null');
-                    //}
                 }
             });
-
-        //} else {
-           // alert('No Department Selected!');
-        //}
-
     });
 });
 
 $(function () {
     $('#employee').click(function () {
         var dept = $('#ddldepartment').val();
+        var year = $('#ddlyear').val();
         var empl = $('#ddlstaff').val();
         if (empl != null && empl != "") {
             $.ajax({
                 url: '/Chart/PieData',
-                data: { id: dept, employee: empl },
+                data: { id: dept, employee: empl, year: year },
                 type: 'post',
                 success: function (data) {
                     if (data != null && data != "") {
-                        //alert(JSON.stringify(data));
-                        //console.log(JSON.stringify(data));
                         drawPie(data);
                     }                    
                 }
             });
-
-        //} else {
-            //alert('No Employee Selected!');
         } else if(dept != "" && empl == ""){
             alert("Please select an employee")
         } else {
             alert("Please select a department")
         }
-
     });
 });
 
@@ -63,12 +50,15 @@ function drawPie(d) {
             plotShadow: false,
             type: 'pie'
         },
+        credits: {
+            text: 'Transcendence 2017'
+        },
         title: {
             text: 'Revenue Comparisons by Year'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
+        },        
         plotOptions: {
             pie: {
                 allowPointSelect: true,

@@ -22,17 +22,26 @@
       <EntityTypeMapping TypeName="transcendenceModel.Staff">
         <MappingFragment StoreEntitySet="Staff">
           <ScalarProperty Name="StaffID" ColumnName="StaffID" />
-          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
           <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffDepts">
+      <EntityTypeMapping TypeName="transcendenceModel.StaffDept">
+        <MappingFragment StoreEntitySet="StaffDept">
+          <ScalarProperty Name="StaffDeptID" ColumnName="StaffDeptID" />
+          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Transactions">
       <EntityTypeMapping TypeName="transcendenceModel.Transaction">
         <MappingFragment StoreEntitySet="Transactions">
-          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+          <ScalarProperty Name="TransID" ColumnName="TransID" />
           <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
           <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="StaffID" ColumnName="StaffID" />
           <ScalarProperty Name="FundMasterID" ColumnName="FundMasterID" />
           <ScalarProperty Name="TransType" ColumnName="TransType" />
           <ScalarProperty Name="TransDate" ColumnName="TransDate" />
@@ -41,18 +50,6 @@
           <ScalarProperty Name="TransCredit" ColumnName="TransCredit" />
           <ScalarProperty Name="TransCharge" ColumnName="TransCharge" />
           <ScalarProperty Name="TransAmount" ColumnName="TransAmount" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="database_firewall_rules">
-      <EntityTypeMapping TypeName="transcendenceModel.database_firewall_rules">
-        <MappingFragment StoreEntitySet="database_firewall_rules">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
-          <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
-          <ScalarProperty Name="create_date" ColumnName="create_date" />
-          <ScalarProperty Name="modify_date" ColumnName="modify_date" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

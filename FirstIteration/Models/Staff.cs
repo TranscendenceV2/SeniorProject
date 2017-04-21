@@ -18,14 +18,15 @@ namespace FirstIteration.Models
         public Staff()
         {
             this.Transactions = new HashSet<Transaction>();
+            this.StaffDepts = new HashSet<StaffDept>();
         }
     
         public int StaffID { get; set; }
-        public int DeptID { get; set; }
         public string StaffName { get; set; }
     
-        public virtual Department Department { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StaffDept> StaffDepts { get; set; }
     }
 }
