@@ -52,7 +52,10 @@ $(function () {
 function drawColumn(jsonData) {
     Highcharts.chart('visualization', {
         chart: {
-            type: 'column'
+            type: 'column',
+            zoomType: 'x',
+            panning: true,
+            panKey: 'shift'
         },
         title: {
             text: 'Monthly Revenue'
