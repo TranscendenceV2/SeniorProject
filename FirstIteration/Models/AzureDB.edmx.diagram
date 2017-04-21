@@ -4,16 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5e106b61502a44c29a161c8079696401" Name="Diagram1">
-        <EntityTypeShape EntityType="transcendenceModel.Department" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+      <Diagram DiagramId="90882392a15b4a2982645be1eaec5b3d" Name="Diagram1">
+        <EntityTypeShape EntityType="transcendenceModel.Department" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="transcendenceModel.Funding_Sources" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="transcendenceModel.Staff" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="transcendenceModel.Transaction" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="transcendenceModel.database_firewall_rules" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="transcendenceModel.Staff" Width="1.5" PointX="3.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="transcendenceModel.StaffDept" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="transcendenceModel.Transaction" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
         <AssociationConnector Association="transcendenceModel.FK_Dept" ManuallyRouted="false" />
-        <AssociationConnector Association="transcendenceModel.FK_DeptID" ManuallyRouted="false" />
+        <AssociationConnector Association="transcendenceModel.FK_DeptID_Bridge" ManuallyRouted="false" />
         <AssociationConnector Association="transcendenceModel.FK_FundMasterID" ManuallyRouted="false" />
-        <AssociationConnector Association="transcendenceModel.FK_Staff" />
+        <AssociationConnector Association="transcendenceModel.FK_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="transcendenceModel.FK_StaffID_Bridge" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

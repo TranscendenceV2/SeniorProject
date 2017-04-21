@@ -1,0 +1,9 @@
+C:\Users\Brian\Documents\Visual Studio 2015\Github\Source\Repos\SeniorProject\TranscendenceDB\bin\Debug\TranscendenceDB.dacpac
+C:\Users\Brian\Documents\Visual Studio 2015\Github\Source\Repos\SeniorProject\TranscendenceDB\bin\Debug\TranscendenceDB.dll
+C:\Users\Brian\Documents\Visual Studio 2015\Github\Source\Repos\SeniorProject\TranscendenceDB\bin\Debug\TranscendenceDB.pdb
+C:\Users\Brian\Documents\Visual Studio 2015\Github\Source\Repos\SeniorProject\TranscendenceDB\obj\Debug\Model.xml
+C:\Users\Brian\Documents\Visual Studio 2015\Github\Source\Repos\SeniorProject\TranscendenceDB\obj\Debug\refactor.xml
+C:\Users\Brian\Documents\Visual Studio 2015\Github\Source\Repos\SeniorProject\TranscendenceDB\obj\Debug\postdeploy.sql
+C:\Users\Brian\Documents\Visual Studio 2015\Github\Source\Repos\SeniorProject\TranscendenceDB\obj\Debug\predeploy.sql
+C:\Users\Brian\Documents\Visual Studio 2015\Github\Source\Repos\SeniorProject\TranscendenceDB\obj\Debug\TranscendenceDB.dll
+C:\Users\Brian\Documents\Visual Studio 2015\Github\Source\Repos\SeniorProject\TranscendenceDB\obj\Debug\TranscendenceDB.pdb
