@@ -332,3 +332,5 @@ C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\bin\DotNet.Highch
 C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\bin\DotNet.Highcharts.xml
 C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\bin\CsvHelper.dll
 C:\Users\n00970992\Source\Repos\SeniorProject\FirstIteration\bin\CsvHelper.xml
+C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\bin\CsvHelper.dll
+C:\Users\Brandon\Documents\GitHub\SeniorProject\FirstIteration\bin\CsvHelper.xml

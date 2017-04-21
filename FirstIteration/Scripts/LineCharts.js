@@ -48,6 +48,9 @@ $(function () {
 function drawLine(jsonData) {
     Highcharts.chart('chart_div', {
 
+        chart: {
+            zoomType: 'x'
+        },
         data: {
             d: jsonData
         },
