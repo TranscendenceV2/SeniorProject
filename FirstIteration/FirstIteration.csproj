@@ -228,9 +228,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AzureDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\database_firewall_rules.cs">
-      <DependentUpon>AzureDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DbContextExtend.cs" />
     <Compile Include="Models\Department.cs">
       <DependentUpon>AzureDB.tt</DependentUpon>
@@ -241,6 +238,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Staff.cs">
+      <DependentUpon>AzureDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StaffDept.cs">
       <DependentUpon>AzureDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Transaction.cs">

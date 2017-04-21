@@ -18,10 +18,10 @@ namespace FirstIteration.Services
             using (var context = new transcendenceEntities())
             {
                 allStaff = (from s in context.Staffs
-                             where s.DeptID == id
-                             select s).ToList();
-                
-                
+                            join staffdept in context.StaffDepts on s.StaffID equals staffdept.StaffID
+                            where staffdept.DeptID == id
+                            select s).ToList();
+
             }
             return allStaff;
         }

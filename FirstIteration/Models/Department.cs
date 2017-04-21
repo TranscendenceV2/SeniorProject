@@ -18,7 +18,7 @@ namespace FirstIteration.Models
         public Department()
         {
             this.Transactions = new HashSet<Transaction>();
-            this.Staffs = new HashSet<Staff>();
+            this.StaffDepts = new HashSet<StaffDept>();
         }
     
         public int DeptID { get; set; }
@@ -27,6 +27,6 @@ namespace FirstIteration.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Staff> Staffs { get; set; }
+        public virtual ICollection<StaffDept> StaffDepts { get; set; }
     }
 }

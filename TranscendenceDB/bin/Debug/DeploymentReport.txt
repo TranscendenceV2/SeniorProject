@@ -1,0 +1,35 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[Funding_Sources]
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       The column [dbo].[Staff].[DeptID] is being dropped, data loss could occur.
+
+** User actions
+     Drop
+       [dbo].[FK_DeptID] (Foreign Key)
+     Table rebuild
+       [dbo].[Funding_Sources] (Table)
+     Alter
+       [dbo].[Staff] (Table)
+       [dbo].[Transactions] (Table)
+     Create
+       [dbo].[StaffDept] (Table)
+       [dbo].[FK_DeptID_Bridge] (Foreign Key)
+       [dbo].[FK_StaffID_Bridge] (Foreign Key)
+
+** Supporting actions
+     Drop
+       [dbo].[FK_FundMasterID] (Foreign Key)
+     Create
+       [dbo].[FK_FundMasterID] (Foreign Key)
+     Refresh
+       [dbo].[GetTransCategoriesByDept] (Procedure)
+       [dbo].[GetTransCategoriesByTotal] (Procedure)
+       [dbo].[GetTransCategoriesForPie] (Procedure)
+
+The column [dbo].[Staff].[DeptID] is being dropped, data loss could occur.
+
