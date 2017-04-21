@@ -78,7 +78,8 @@ function drawColumn(jsonData) {
                 'Nov',
                 'Dec'
             ],
-            crosshair: true
+            crosshair: true,
+            minRange: 3
         },
         yAxis: {
             min: 0,
