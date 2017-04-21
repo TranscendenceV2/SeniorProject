@@ -91,6 +91,9 @@ function drawColumn(jsonData) {
             shared: true,
             useHTML: true
         },
+        credits: {
+            text: 'Transcendence 2017'
+        },
         plotOptions: {
             column: {
                 pointPadding: 0.2,

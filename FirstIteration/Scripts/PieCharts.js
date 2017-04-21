@@ -50,12 +50,15 @@ function drawPie(d) {
             plotShadow: false,
             type: 'pie'
         },
+        credits: {
+            text: 'Transcendence 2017'
+        },
         title: {
             text: 'Revenue Comparisons by Year'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
+        },        
         plotOptions: {
             pie: {
                 allowPointSelect: true,

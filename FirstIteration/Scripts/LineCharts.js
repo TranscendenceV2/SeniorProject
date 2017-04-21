@@ -49,7 +49,9 @@ function drawLine(jsonData) {
     Highcharts.chart('chart_div', {
 
         chart: {
-            zoomType: 'x'
+            zoomType: 'x',
+            panning: true,
+            panKey: 'shift'
         },
         data: {
             d: jsonData
@@ -62,12 +64,16 @@ function drawLine(jsonData) {
             text: 'Clay Behavioral Health'
         },
         xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            minRange: 3
         },
         yAxis: {
             title: {
                 text: 'Revenue ($)'
             }
+        },
+        credits: {
+            text: 'Transcendence 2017'
         },
         plotOptions: {
             line: {
